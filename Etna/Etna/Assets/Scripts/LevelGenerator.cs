@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour {
 
-    private const float spawnInterval = 0.1f;
+    private GameManager gameManager;
+
+    private const float spawnInterval = 5f;
     private float lastSpawn;
 
     public const int roomGridSize = 100;
@@ -20,6 +22,12 @@ public class LevelGenerator : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        if (GameObject.FindGameObjectWithTag("GameManager") != null)
+        {
+            if (GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>() != null) {
+                gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+            }
+        }
         addNewRoom();
     }
 
@@ -46,21 +54,7 @@ public class LevelGenerator : MonoBehaviour {
             }
             doors[entranceDoor] = true;
             Vector2 newRoomPos = new Vector2(Mathf.RoundToInt(lastRoom.GetGridPosition().x + directionToVec2(direction).x), Mathf.RoundToInt(lastRoom.GetGridPosition().y + directionToVec2(direction).y));
-
-            for (int i = 0; i < 1; i++)
-            {
-                int rnd = Random.Range(0, 4);
-                Debug.Log(directionToVec2(rnd));
-                if (!doors[rnd] && !isGridTileOccupied(Mathf.RoundToInt(newRoomPos.x + directionToVec2(rnd).x), Mathf.RoundToInt(newRoomPos.y + directionToVec2(rnd).y)))
-                {
-                    Debug.Log("Placing door towards: " + Mathf.RoundToInt(newRoomPos.x + directionToVec2(rnd).x) + " _ " + Mathf.RoundToInt(newRoomPos.y + directionToVec2(rnd).y));
-                    doors[rnd] = true;
-                } else
-                {
-                    Debug.Log("Selected tile is not available: " + Mathf.RoundToInt(newRoomPos.x + directionToVec2(rnd).x) + " _ " + Mathf.RoundToInt(newRoomPos.y + directionToVec2(rnd).y));
-                    i--;
-                }
-            }
+            doors[getRandomDirection(doors, newRoomPos)] = true;
 
             int roomDesign = Random.Range(0, RoomDesigns.Length);
             bool roomPlaced = false;
@@ -73,6 +67,10 @@ public class LevelGenerator : MonoBehaviour {
                         roomPool[i].ToggleRoomActive(true);
                         rooms.Add(roomPool[i]);
                         roomPool[i].RepositionRoom(Mathf.RoundToInt(newRoomPos.x), Mathf.RoundToInt(newRoomPos.y), doors, SolidWall, DoorWall, entranceDoor);
+                        if (gameManager != null)
+                        {
+                            gameManager.AddToDarknessPath(roomPool[i].GetRoomPosition());
+                        }
                         roomPool.RemoveAt(i);
                         roomPlaced = true;
                         break;
@@ -85,6 +83,10 @@ public class LevelGenerator : MonoBehaviour {
                 Room newRoom = new Room();
                 newRoom.InitializeRoom(Mathf.RoundToInt(newRoomPos.x), Mathf.RoundToInt(newRoomPos.y), RoomDesigns[roomDesign], doors, SolidWall, DoorWall, Roof, entranceDoor);
                 rooms.Add(newRoom);
+                if (gameManager != null)
+                {
+                    gameManager.AddToDarknessPath(newRoom.GetRoomPosition());
+                }
             }
             roomGrid[Mathf.RoundToInt(newRoomPos.x), Mathf.RoundToInt(newRoomPos.y)] = true;
 
@@ -102,7 +104,52 @@ public class LevelGenerator : MonoBehaviour {
             newRoom.InitializeRoom(roomGridSize/2, roomGridSize/2, RoomDesigns[Random.Range(0, RoomDesigns.Length)], new bool[] { true, false, false, false }, SolidWall, DoorWall, Roof);
             roomGrid[roomGridSize/2, roomGridSize/2] = true;
             rooms.Add(newRoom);
+            if (gameManager != null)
+            {
+                gameManager.AddToDarknessPath(newRoom.GetRoomPosition());
+            }
         }
+    }
+
+    private int getRandomDirection(bool[] doors, Vector2 roomPos)
+    {
+        int dir = 0;
+        int rnd = Random.Range(0, roomGridSize);
+        int counter = 0;
+        int[] dirPercentages = new int[4];
+        //Gives each direction a percentile chance to be chosen, based on the position of the current room. Example: If the room is 20 units on the X-axis from the center, the chance to reduce that number is larger than increasing it.
+        dirPercentages[0] = (roomGridSize / 4) - Mathf.RoundToInt((roomPos.y - (roomGridSize / 2)) / 2);
+        dirPercentages[1] = (roomGridSize / 4) - Mathf.RoundToInt((roomPos.x - (roomGridSize / 2)) / 2);
+        dirPercentages[2] = (roomGridSize / 4) + Mathf.RoundToInt((roomPos.y - (roomGridSize / 2)) / 2);
+        dirPercentages[3] = (roomGridSize / 4) + Mathf.RoundToInt((roomPos.x - (roomGridSize / 2)) / 2);
+
+        for (int i = 0; i < 100; i++)
+        {
+            rnd = Random.Range(0, roomGridSize);
+            counter = 0;
+            for (int j = 0; j < dirPercentages.Length; j++)
+            {
+                counter += dirPercentages[j];
+                if (rnd < counter)
+                {
+                    dir = j;
+                    break;
+                }
+            }
+            //rnd < Mathf.Abs(roomPos.x - (roomGridSize / 2)) * 2 && roomPos.x - (roomGridSize / 2) >= 0
+            if (!doors[dir] && !isGridTileOccupied(Mathf.RoundToInt(roomPos.x + directionToVec2(dir).x), Mathf.RoundToInt(roomPos.y + directionToVec2(dir).y)))
+            {
+                //Debug.Log("Placing door towards: " + Mathf.RoundToInt(roomPos.x + directionToVec2(dir).x) + " _ " + Mathf.RoundToInt(roomPos.y + directionToVec2(dir).y));
+                return dir;
+            }
+            else
+            {
+                //Debug.Log("Selected tile is not available: " + Mathf.RoundToInt(roomPos.x + directionToVec2(dir).x) + " _ " + Mathf.RoundToInt(roomPos.y + directionToVec2(dir).y));
+            }
+        }
+        //No good direction found.
+        Debug.Log("No good direction found!");
+        return 0;
     }
 
     private bool isGridTileOccupied(int x, int y)

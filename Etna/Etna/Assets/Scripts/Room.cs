@@ -30,7 +30,6 @@ public class Room : MonoBehaviour {
         roof.position = new Vector3((gridPosition.x - LevelGenerator.roomGridSize / 2) * 50, 50, (gridPosition.y - LevelGenerator.roomGridSize / 2) * 50);
         doorDirections = pDoorDirections;
         roomType = int.Parse(pRoom.name.Remove(0,5));
-        Debug.Log(roomType);
 
         for (int i = 0; i < doorDirections.Length; i++)
         {
@@ -123,6 +122,10 @@ public class Room : MonoBehaviour {
     public Vector2 GetGridPosition()
     {
         return gridPosition;
+    }
+    public Vector3 GetRoomPosition()
+    {
+        return new Vector3(room.transform.position.x, 0, room.transform.position.z);
     }
 
     public int GetRandomDoorDirection()
