@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - CollectibleLight
+  - Wall
   layers:
   - Default
   - TransparentFX
