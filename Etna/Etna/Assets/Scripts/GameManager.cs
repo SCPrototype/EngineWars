@@ -28,6 +28,17 @@ public class GameManager : MonoBehaviour {
         darknessSpeed += DarknessSpeedIncrease;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<ActivationLight>() != null)
+        {
+            if (other.GetComponent<ActivationLight>().GetIsActivated())
+            {
+                SlowDownDarkness();
+            }
+        }
+    }
+
     private void moveDarknessAlongPath()
     {
         if ((darkness.transform.position - darknessPath[0]).magnitude <= darknessSpeed)

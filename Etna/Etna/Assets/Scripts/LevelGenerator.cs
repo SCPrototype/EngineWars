@@ -5,7 +5,9 @@ using UnityEngine;
 public class LevelGenerator : MonoBehaviour {
 
     private GameManager gameManager;
+    private GameObject player;
 
+    private const int maxActiveRoomAmount = 6;
     private const float spawnInterval = 5f;
     private float lastSpawn;
 
@@ -28,19 +30,30 @@ public class LevelGenerator : MonoBehaviour {
                 gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
             }
         }
-        addNewRoom();
+        if (GameObject.FindGameObjectWithTag("Player") != null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+        for (int i = 0; i < maxActiveRoomAmount/2; i++)
+        {
+            AddNewRoom();
+        }
     }
 
     // Update is called once per frame
     void Update() {
-        if (Time.time - lastSpawn >= spawnInterval)
+        if (Vector3.Distance(player.transform.position, rooms[rooms.Count-1].GetRoomPosition()) <= 50 && Vector3.Distance(player.transform.position, rooms[0].GetRoomPosition()) >= 50)
         {
-            addNewRoom();
-            lastSpawn = Time.time;
+            AddNewRoom();
         }
+        /*if (Time.time - lastSpawn >= spawnInterval)
+        {
+            AddNewRoom();
+            lastSpawn = Time.time;
+        }*/
     }
 
-    private void addNewRoom()
+    public void AddNewRoom()
     {
         if (rooms.Count > 0)
         {
@@ -90,7 +103,7 @@ public class LevelGenerator : MonoBehaviour {
             }
             roomGrid[Mathf.RoundToInt(newRoomPos.x), Mathf.RoundToInt(newRoomPos.y)] = true;
 
-            if (rooms.Count > 6)
+            if (rooms.Count > maxActiveRoomAmount)
             {
                 roomPool.Add(rooms[0]);
                 rooms[0].ToggleRoomActive(false);

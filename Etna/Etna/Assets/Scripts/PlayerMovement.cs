@@ -109,19 +109,19 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = 3;
             if (Input.GetKey(KeyCode.W))
             {
-                rb.AddForce(transform.forward * MovementSpeed);
+                rb.AddForce(transform.forward * MovementSpeed * Time.deltaTime);
             }
             if (Input.GetKey(KeyCode.A))
             {
-                rb.AddForce(-transform.right * MovementSpeed);
+                rb.AddForce(-transform.right * MovementSpeed * Time.deltaTime);
             }
             if (Input.GetKey(KeyCode.S))
             {
-                rb.AddForce(-transform.forward * MovementSpeed);
+                rb.AddForce(-transform.forward * MovementSpeed * Time.deltaTime);
             }
             if (Input.GetKey(KeyCode.D))
             {
-                rb.AddForce(transform.right * MovementSpeed);
+                rb.AddForce(transform.right * MovementSpeed * Time.deltaTime);
             }
             if (rb.velocity.magnitude >= MaxSpeed)
             {
@@ -137,19 +137,19 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = 1;
             if (Input.GetKey(KeyCode.W))
             {
-                rb.AddForce(transform.forward * MovementSpeedInAir);
+                rb.AddForce(transform.forward * MovementSpeedInAir * Time.deltaTime);
             }
             if (Input.GetKey(KeyCode.A))
             {
-                rb.AddForce(-transform.right * MovementSpeedInAir);
+                rb.AddForce(-transform.right * MovementSpeedInAir * Time.deltaTime);
             }
             if (Input.GetKey(KeyCode.S))
             {
-                rb.AddForce(-transform.forward * MovementSpeedInAir);
+                rb.AddForce(-transform.forward * MovementSpeedInAir * Time.deltaTime);
             }
             if (Input.GetKey(KeyCode.D))
             {
-                rb.AddForce(transform.right * MovementSpeedInAir);
+                rb.AddForce(transform.right * MovementSpeedInAir * Time.deltaTime);
             }
             if (rb.velocity.magnitude >= MaxSpeed)
             {
