@@ -22,11 +22,13 @@ public class RotationManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        HandleCamera();
-
+        if (!GameMenu_Handler.Paused)
+        {
+            HandleRotation();
+        }
     }
 
-    private void HandleCamera()
+    private void HandleRotation()
     {
         //rotationX keeps track of the mouse X movement since the start of the game.
         rotationX += Input.GetAxis("Mouse X") * XSensitivity;

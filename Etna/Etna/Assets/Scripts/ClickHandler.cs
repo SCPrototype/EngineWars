@@ -22,13 +22,16 @@ public class ClickHandler : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 6.0f))
             {
-                Debug.Log("Static crystal clicked");
-                torchLight = hit.transform.gameObject;
-                activationLight = torchLight.GetComponent<ActivationLight>();
-                activationLight.ActivateLight();
+                if (hit.transform.gameObject.GetComponent<ActivationLight>() != null)
+                {
+                    Debug.Log("Static crystal clicked");
+                    torchLight = hit.transform.gameObject;
+                    activationLight = torchLight.GetComponent<ActivationLight>();
+                    activationLight.ActivateLight();
 
-                torchLight = null;
-                activationLight = null;
+                    torchLight = null;
+                    activationLight = null;
+                }
             }
         }
     }

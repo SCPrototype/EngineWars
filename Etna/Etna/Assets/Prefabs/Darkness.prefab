@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23734046526309272}
   - component: {fileID: 199927732448486778}
   - component: {fileID: 198166049370896452}
+  - component: {fileID: 114581633191822724}
   m_Layer: 0
   m_Name: Darkness
   m_TagString: Untagged
@@ -92,11 +93,22 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1072499508556748}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114581633191822724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1072499508556748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59838e2a6a07fe64ebcf2542682d3f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198166049370896452
 ParticleSystem:
   m_ObjectHideFlags: 1

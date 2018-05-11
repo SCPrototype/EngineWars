@@ -38,6 +38,12 @@ public class LevelGenerator : MonoBehaviour {
         {
             AddNewRoom();
         }
+        if (rooms.Count > 1)
+        {
+            player.transform.position = rooms[0].GetRoomPosition() + (0.45f * (rooms[0].GetRoomPosition() - rooms[1].GetRoomPosition())) + new Vector3(0, 22.5f, 0);
+            player.transform.LookAt(rooms[1].GetRoomPosition() + new Vector3(0, 22.5f, 0));
+            //player.transform.position = rooms[0].GetRoomPosition();
+        }
     }
 
     // Update is called once per frame
@@ -114,7 +120,9 @@ public class LevelGenerator : MonoBehaviour {
         else
         { 
             Room newRoom = new Room();
-            newRoom.InitializeRoom(roomGridSize/2, roomGridSize/2, RoomDesigns[Random.Range(0, RoomDesigns.Length)], new bool[] { true, false, false, false }, SolidWall, DoorWall, Roof);
+            bool[] doors = new bool[] { true, false, false, false };
+            //doors[Random.Range(0, doors.Length)] = true;
+            newRoom.InitializeRoom(roomGridSize/2, roomGridSize/2, RoomDesigns[Random.Range(0, RoomDesigns.Length)], doors, SolidWall, DoorWall, Roof);
             roomGrid[roomGridSize/2, roomGridSize/2] = true;
             rooms.Add(newRoom);
             if (gameManager != null)

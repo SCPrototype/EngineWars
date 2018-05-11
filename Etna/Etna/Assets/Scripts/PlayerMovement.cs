@@ -42,9 +42,20 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleInput();
-        HandleGrounded();
-        HandleWall();
+        if (!GameMenu_Handler.Paused)
+        {
+            if (rb.isKinematic)
+            {
+                rb.isKinematic = false;
+            }
+            HandleInput();
+            HandleGrounded();
+            HandleWall();
+        }
+        else if (!rb.isKinematic)
+        {
+            rb.isKinematic = true;
+        }
     }
 
     private void HandleGrounded()
