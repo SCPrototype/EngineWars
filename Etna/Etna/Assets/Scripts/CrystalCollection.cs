@@ -8,7 +8,8 @@ public class CrystalCollection : MonoBehaviour {
     private Resources resources;
 
 	// Use this for initialization
-	void Start () { 
+	void Start () {
+        gameHandler = GameObject.Find("GameHandler");
         resources = gameHandler.GetComponent<Resources>();
 	}
 	

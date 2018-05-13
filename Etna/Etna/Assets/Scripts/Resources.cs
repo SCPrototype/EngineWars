@@ -6,27 +6,39 @@ using UnityEngine.UI;
 
 public class Resources : MonoBehaviour
 {
-
     private float amountOfEnergyStored = 0;
     public float amountOfTimeLightDecay;
     private float timeLeft = 0;
-    public Text lightUI;
+    private Text lightUItext;
+    private GameObject UI;
 
     // Use this for initialization
     void Start()
     {
-
+        UI = GameObject.Find("UI Canvas");
+        lightUItext = UI.GetComponent<Text>();
+        if (null == UI)
+        {
+            Debug.Log("UI not found");
+        }
+        if (null == lightUItext)
+        {
+            Debug.Log("Light text not found");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        lightUI.text = amountOfEnergyStored.ToString();
-        timeLeft += Time.deltaTime;
-        if (timeLeft >= amountOfTimeLightDecay && amountOfEnergyStored > 0)
+        if (lightUItext != null)
         {
-            amountOfEnergyStored--;
-            timeLeft = 0;
+            lightUItext.text = amountOfEnergyStored.ToString();
+            timeLeft += Time.deltaTime;
+            if (timeLeft >= amountOfTimeLightDecay && amountOfEnergyStored > 0)
+            {
+                amountOfEnergyStored--;
+                timeLeft = 0;
+            }
         }
     }
 
@@ -46,10 +58,12 @@ public class Resources : MonoBehaviour
 
     public bool CanActivateLight()
     {
-        if(amountOfEnergyStored >= 20)
-        { amountOfEnergyStored -= 20;
+        if (amountOfEnergyStored >= 20)
+        {
+            amountOfEnergyStored -= 20;
             return true;
-        } else
+        }
+        else
         {
             return false;
         }
