@@ -5,7 +5,9 @@ using UnityEngine;
 public class LevelGenerator : MonoBehaviour {
 
     private GameManager gameManager;
+    private GameObject player;
 
+    private const int maxActiveRoomAmount = 6;
     private const float spawnInterval = 5f;
     private float lastSpawn;
 
@@ -28,19 +30,36 @@ public class LevelGenerator : MonoBehaviour {
                 gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
             }
         }
-        addNewRoom();
+        if (GameObject.FindGameObjectWithTag("Player") != null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+        for (int i = 0; i < maxActiveRoomAmount/2; i++)
+        {
+            AddNewRoom();
+        }
+        if (rooms.Count > 1)
+        {
+            player.transform.position = rooms[0].GetRoomPosition() + (0.45f * (rooms[0].GetRoomPosition() - rooms[1].GetRoomPosition())) + new Vector3(0, 22.5f, 0);
+            player.transform.LookAt(rooms[1].GetRoomPosition() + new Vector3(0, 22.5f, 0));
+            //player.transform.position = rooms[0].GetRoomPosition();
+        }
     }
 
     // Update is called once per frame
     void Update() {
-        if (Time.time - lastSpawn >= spawnInterval)
+        if (Vector3.Distance(player.transform.position, rooms[rooms.Count-1].GetRoomPosition()) <= 50 && Vector3.Distance(player.transform.position, rooms[0].GetRoomPosition()) >= 50)
         {
-            addNewRoom();
-            lastSpawn = Time.time;
+            AddNewRoom();
         }
+        /*if (Time.time - lastSpawn >= spawnInterval)
+        {
+            AddNewRoom();
+            lastSpawn = Time.time;
+        }*/
     }
 
-    private void addNewRoom()
+    public void AddNewRoom()
     {
         if (rooms.Count > 0)
         {
@@ -90,7 +109,7 @@ public class LevelGenerator : MonoBehaviour {
             }
             roomGrid[Mathf.RoundToInt(newRoomPos.x), Mathf.RoundToInt(newRoomPos.y)] = true;
 
-            if (rooms.Count > 6)
+            if (rooms.Count > maxActiveRoomAmount)
             {
                 roomPool.Add(rooms[0]);
                 rooms[0].ToggleRoomActive(false);
@@ -101,7 +120,9 @@ public class LevelGenerator : MonoBehaviour {
         else
         { 
             Room newRoom = new Room();
-            newRoom.InitializeRoom(roomGridSize/2, roomGridSize/2, RoomDesigns[Random.Range(0, RoomDesigns.Length)], new bool[] { true, false, false, false }, SolidWall, DoorWall, Roof);
+            bool[] doors = new bool[] { true, false, false, false };
+            //doors[Random.Range(0, doors.Length)] = true;
+            newRoom.InitializeRoom(roomGridSize/2, roomGridSize/2, RoomDesigns[Random.Range(0, RoomDesigns.Length)], doors, SolidWall, DoorWall, Roof);
             roomGrid[roomGridSize/2, roomGridSize/2] = true;
             rooms.Add(newRoom);
             if (gameManager != null)

@@ -8,11 +8,21 @@ public class menu_handler : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Debug.Log("Loaded scene");
-        SceneManager.LoadScene("LevelOne", LoadSceneMode.Single);
+        //SceneManager.LoadScene("LevelOne", LoadSceneMode.Single);
     }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public void LoadLevel(int indx)
+    {
+        SceneManager.LoadScene(indx);
+    }
+
+    public void ExitApplication()
+    {
+        Application.Quit();
+    }
 }

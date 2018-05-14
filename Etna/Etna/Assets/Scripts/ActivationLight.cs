@@ -55,4 +55,9 @@ public class ActivationLight : MonoBehaviour
         _isActivated = false;
         Torchlight.intensity = 0;
     }
+
+    public bool GetIsActivated()
+    {
+        return _isActivated;
+    }
 }
