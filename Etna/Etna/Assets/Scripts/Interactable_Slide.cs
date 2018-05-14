@@ -9,10 +9,11 @@ public class Interactable_Slide : Interactable {
     public BoxCollider SlideEnd;
     private Vector2 SlideAngle;
     private float maxAngleDiff = 0.40f;
+    private float speedThreshold = 1f;
 
     // Use this for initialization
     void Start () {
-        SlideAngle = SlideEnd.transform.position - SlideStart.transform.position;
+        SlideAngle = new Vector2(SlideEnd.transform.position.x - SlideStart.transform.position.x, SlideEnd.transform.position.z - SlideStart.transform.position.z);
     }
 	
 	// Update is called once per frame
@@ -29,7 +30,7 @@ public class Interactable_Slide : Interactable {
         {
             if (collidedObject.GetComponent<PlayerMovement>() == target)
             {
-                if (GetAngleDifference(new Vector2(target.GetRigidBody().velocity.x, target.GetRigidBody().velocity.z), SlideAngle) >= 1 - maxAngleDiff || target.GetRigidBody().velocity.magnitude <= 0.1f)
+                if (GetAngleDifference(new Vector2(target.GetRigidBody().velocity.x, target.GetRigidBody().velocity.z), SlideAngle) >= 1 - maxAngleDiff || target.GetRigidBody().velocity.magnitude <= speedThreshold)
                 {
                     target.Slide(SlideStart.transform.position, SlideEnd.transform.position);
                     Debug.Log("Get slid under mate.");
@@ -44,7 +45,7 @@ public class Interactable_Slide : Interactable {
         {
             if (collidedObject.GetComponent<PlayerMovement>() == target)
             {
-                if (GetAngleDifference(new Vector2(target.GetRigidBody().velocity.x, target.GetRigidBody().velocity.z), SlideAngle) <= -1 + maxAngleDiff || target.GetRigidBody().velocity.magnitude <= 0.1f)
+                if (GetAngleDifference(new Vector2(target.GetRigidBody().velocity.x, target.GetRigidBody().velocity.z), SlideAngle) <= -1 + maxAngleDiff || target.GetRigidBody().velocity.magnitude <= speedThreshold)
                 {
                     target.Slide(SlideEnd.transform.position, SlideStart.transform.position);
                     Debug.Log("Get slid under from the back mate.");
