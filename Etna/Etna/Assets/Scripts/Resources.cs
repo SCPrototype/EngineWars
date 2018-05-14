@@ -10,14 +10,14 @@ public class Resources : MonoBehaviour
     public float amountOfTimeLightDecay;
     private float timeLeft = 0;
     private Text lightUItext;
-    private GameObject UI;
+    private GameObject CrystalPower;
 
     // Use this for initialization
     void Start()
     {
-        UI = GameObject.Find("UI Canvas");
-        lightUItext = UI.GetComponent<Text>();
-        if (null == UI)
+        CrystalPower = GameObject.Find("CrystalPower");
+        lightUItext = CrystalPower.GetComponent<Text>();
+        if (null == CrystalPower)
         {
             Debug.Log("UI not found");
         }
