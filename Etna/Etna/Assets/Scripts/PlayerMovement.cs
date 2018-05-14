@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float MaxSpeed;
     public float MaxSpeedInAir;
     public float JumpHeight;
+    public float FallingSpeedOnWall;
     private bool isGrounded;
     private bool isOnWall;
     private Rigidbody rb;
@@ -104,8 +105,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (collidedObject.tag == "Wall")
             {
-                Debug.Log("Character is on a wall left");
-                isOnWall = true;
+                myMovementState = MovementState.WallRun;
                 break;
             }
         }
@@ -116,8 +116,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (collidedObject.tag == "Wall")
             {
-                Debug.Log("Character is on a wall right");
-                isOnWall = true;
+                myMovementState = MovementState.WallRun;
                 break;
             }
         }
@@ -125,20 +124,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleInput()
     {
-        if (isOnWall)
-        {
-            rb.useGravity = false;
-            isGrounded = true;
-        }
-        else
-        {
-            rb.useGravity = true;
-        }
         if (isGrounded)
         {
             if (myMovementState != MovementState.Vault && myMovementState != MovementState.Slide)
             {
-                rb.drag = 3;
                 if (Input.GetKey(KeyCode.W))
                 {
                     rb.velocity += transform.forward * MovementSpeed * Time.deltaTime;
@@ -247,6 +236,9 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case MovementState.WallRun:
+                Debug.Log("Wallrunning");
+                rb.velocity += transform.forward * MovementSpeed * Time.deltaTime;
+                rb.velocity -= transform.up * FallingSpeedOnWall * Time.deltaTime;
                 break;
             case MovementState.WallCling:
                 break;
@@ -303,5 +295,10 @@ public class PlayerMovement : MonoBehaviour
     {
         myMovementState = MovementState.Jump;
         rb.AddForce(transform.up * JumpHeight);
+    }
+
+    public void WallRunning()
+    {
+
     }
 }
