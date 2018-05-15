@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private bool isOnWall;
     private Rigidbody rb;
+    private const float groundDrag = 8f;
+    private const float airDrag = 0.1f;
 
     private const float FOVChange = 25;
     private float baseFOV;
@@ -137,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (myMovementState != MovementState.Vault && myMovementState != MovementState.Slide)
             {
-                rb.drag = 3;
+                rb.drag = groundDrag;
                 if (Input.GetKey(KeyCode.W))
                 {
                     //rb.velocity += transform.forward * MovementSpeed * Time.deltaTime;
@@ -182,7 +184,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            rb.drag = 0.1f;
+            rb.drag = airDrag;
             if (Input.GetKey(KeyCode.W))
             {
                 //rb.velocity += transform.forward * MovementSpeed * Time.deltaTime * 0.003f;
