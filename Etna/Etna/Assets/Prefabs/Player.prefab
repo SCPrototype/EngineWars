@@ -72,7 +72,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4334610593741690}
   - component: {fileID: 33383306907464656}
-  - component: {fileID: 136207651929433884}
   - component: {fileID: 23519059166472082}
   - component: {fileID: 114345338468641188}
   - component: {fileID: 54906202481134106}
@@ -81,6 +80,7 @@ GameObject:
   - component: {fileID: 114918125564102170}
   - component: {fileID: 114265064593660462}
   - component: {fileID: 114606383988437970}
+  - component: {fileID: 65324048334690358}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -362,7 +362,7 @@ Rigidbody:
   m_GameObject: {fileID: 1726874861954776}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0.1
+  m_Drag: 8
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -380,6 +380,18 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65324048334690358
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1726874861954776}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.95, y: 2, z: 0.95}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65377219443129592
 BoxCollider:
@@ -403,8 +415,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.05, z: 1}
-  m_Center: {x: 0, y: -1.005, z: 0}
+  m_Size: {x: 0.9, y: 0.05, z: 0.9}
+  m_Center: {x: 0, y: -1, z: 0}
 --- !u!65 &65844805302897592
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -510,7 +522,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8be416068b042429e9f10cc65892f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameHandler: {fileID: 0}
   maxLightIntensity: 20
   maxLightRange: 6
 --- !u!114 &114606383988437970
@@ -536,11 +547,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ea67f8113cdb64993df6ee03a0e7a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 3000
-  MovementSpeedInAir: 5
+  MovementSpeed: 5000
+  MovementSpeedInAir: 25
   MaxSpeed: 8
-  MaxSpeedInAir: 10
-  JumpHeight: 500
+  JumpHeight: 650
 --- !u!124 &124551466163783192
 Behaviour:
   m_ObjectHideFlags: 1
@@ -548,19 +558,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1969774963821326}
   m_Enabled: 1
---- !u!136 &136207651929433884
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1726874861954776}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136615667186292298
 CapsuleCollider:
   m_ObjectHideFlags: 1

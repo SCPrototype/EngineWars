@@ -9,10 +9,11 @@ public class Interactable_Vault : Interactable {
     public BoxCollider VaultEnd;
     private Vector2 VaultAngle;
     private float maxAngleDiff = 0.40f;
+    private float speedThreshold = 1f;
 
     // Use this for initialization
     void Start () {
-        VaultAngle = VaultEnd.transform.position - VaultStart.transform.position;
+        VaultAngle = new Vector2(VaultEnd.transform.position.x - VaultStart.transform.position.x, VaultEnd.transform.position.z - VaultStart.transform.position.z);
     }
 	
 	// Update is called once per frame
@@ -22,14 +23,14 @@ public class Interactable_Vault : Interactable {
 
     public override void Interact(PlayerMovement target)
     {
-        Debug.Log(GetAngleDifference(new Vector2(target.GetRigidBody().velocity.x, target.GetRigidBody().velocity.z), VaultAngle));
+        Debug.Log(target.GetRigidBody().velocity.magnitude);
         Collider[] allOverlappingColliders = Physics.OverlapBox(VaultStart.bounds.center, VaultStart.bounds.extents, VaultStart.transform.rotation);
 
         foreach (Collider collidedObject in allOverlappingColliders)
         {
             if (collidedObject.GetComponent<PlayerMovement>() == target)
             {
-                if (GetAngleDifference(new Vector2(target.GetRigidBody().velocity.x, target.GetRigidBody().velocity.z), VaultAngle) >= 1 - maxAngleDiff || target.GetRigidBody().velocity.magnitude <= 0.1f)
+                if (GetAngleDifference(new Vector2(target.GetRigidBody().velocity.x, target.GetRigidBody().velocity.z), VaultAngle) >= 1 - maxAngleDiff || target.GetRigidBody().velocity.magnitude <= speedThreshold)
                 {
                     target.Vault(VaultStart.transform.position, VaultEnd.transform.position);
                     Debug.Log("Get vaulted over dude.");
@@ -44,7 +45,7 @@ public class Interactable_Vault : Interactable {
         {
             if (collidedObject.GetComponent<PlayerMovement>() == target)
             {
-                if (GetAngleDifference(new Vector2(target.GetRigidBody().velocity.x, target.GetRigidBody().velocity.z), VaultAngle) <= -1 + maxAngleDiff || target.GetRigidBody().velocity.magnitude <= 0.1f)
+                if (GetAngleDifference(new Vector2(target.GetRigidBody().velocity.x, target.GetRigidBody().velocity.z), VaultAngle) <= -1 + maxAngleDiff || target.GetRigidBody().velocity.magnitude <= speedThreshold)
                 {
                     target.Vault(VaultEnd.transform.position, VaultStart.transform.position);
                     Debug.Log("Get vaulted over from the back dude.");
