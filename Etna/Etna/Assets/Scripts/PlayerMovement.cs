@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float JumpHeight;
     private bool isGrounded;
     private bool isOnWall;
+    private bool isCameraTilted = false;
     public float FallingSpeedOnWall;
 
     private Rigidbody rb;
@@ -33,7 +34,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 vaultStart;
     private Vector3 vaultTarget;
 
-    private enum MovementState
+    private Camera playerCamera;
+    private Vector3 playerMovementOnWall;
+
+    public enum MovementState
     {
         Idle,
         Walk,
@@ -46,7 +50,14 @@ public class PlayerMovement : MonoBehaviour
         WallCling
     }
 
+    private enum WallSide
+    {
+        Left,
+        Right
+    }
+
     private MovementState myMovementState = MovementState.Idle;
+    private WallSide myWallSide;
 
 
     // Use this for initialization
@@ -58,7 +69,9 @@ public class PlayerMovement : MonoBehaviour
         feetCollider = GameObject.Find("FeetCollider").GetComponent<BoxCollider>();
         rightCollider = GameObject.Find("SideColliderRight").GetComponent<BoxCollider>();
         leftCollider = GameObject.Find("SideColliderLeft").GetComponent<BoxCollider>();
-        interactCollider = GameObject.Find("InteractCollider").GetComponent<BoxCollider>(); ;
+        interactCollider = GameObject.Find("InteractCollider").GetComponent<BoxCollider>();
+        playerCamera = Camera.main;
+        
     }
 
     // Update is called once per frame
@@ -93,6 +106,13 @@ public class PlayerMovement : MonoBehaviour
                 isGrounded = true;
                 rb.useGravity = true;
                 myMovementState = MovementState.Run;
+                //Reset camera.
+                if(isCameraTilted == true)
+                {
+                    isCameraTilted = false;
+                    playerCamera.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                }
+                
                 break;
             }
         }
@@ -105,31 +125,42 @@ public class PlayerMovement : MonoBehaviour
         isOnWall = false;
         rb.useGravity = true;
         Collider[] allOverlappingCollidersLeft = Physics.OverlapBox(rightCollider.bounds.center, rightCollider.bounds.extents);
-
         foreach (Collider collidedObject in allOverlappingCollidersLeft)
         {
             if (collidedObject.tag == "Wall" && isGrounded == false)
             {
-                Debug.Log("Character is on a wall left");
                 isOnWall = true;
-                rb.useGravity = false;
                 myMovementState = MovementState.WallRun;
+                myWallSide = WallSide.Left;
+                //if (isCameraTilted == false)
+                //{
+                //    playerCamera.transform.Rotate(new Vector3(0, 0, 20));
+                //    isCameraTilted = true;
+                //}
                 break;
             }
         }
 
         Collider[] allOverlappingCollidersRight = Physics.OverlapBox(leftCollider.bounds.center, leftCollider.bounds.extents);
-
         foreach (Collider collidedObject in allOverlappingCollidersRight)
         {
             if (collidedObject.tag == "Wall" && isGrounded == false)
             {
-                Debug.Log("Character is on a wall right");
                 isOnWall = true;
-                rb.useGravity = false;
                 myMovementState = MovementState.WallRun;
+                myWallSide = WallSide.Right;
+                //if (isCameraTilted == false)
+                //{
+                //    playerCamera.transform.Rotate(new Vector3(0, 0, -20));
+                //    isCameraTilted = true;
+                //}
                 break;
             }
+        }
+
+        if(isOnWall == false)
+        {
+            myMovementState = MovementState.Fall;
         }
     }
 
@@ -144,6 +175,15 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.useGravity = true;
         }*/
+        if(myMovementState == MovementState.WallRun)
+        {
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                if(myWallSide == WallSide.Right)
+                { rb.AddForce(transform.right * 900); } else
+                { rb.AddForce(-transform.right * 900); }  
+            }
+        }
         if (isGrounded)
         {
             if (myMovementState != MovementState.Vault && myMovementState != MovementState.Slide)
@@ -193,10 +233,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (myMovementState == MovementState.WallRun)
-            {
-
-            }
+            
             rb.drag = airDrag;
             if (Input.GetKey(KeyCode.W))
             {
@@ -223,7 +260,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized * MaxSpeed + new Vector3(0, rb.velocity.y, 0);
             }
         }
-        Debug.Log(new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
+        //Debug.Log(new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
         //if (rb.velocity.magnitude >= 0.3f)
         //{
         //    Camera.main.fieldOfView = baseFOV + (FOVChange * (rb.velocity.magnitude / MaxSpeed));
@@ -313,13 +350,8 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case MovementState.WallRun:
                 rb.AddForce(transform.forward * MovementSpeed * Time.deltaTime);
-                
-                if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude >= MaxSpeed)
-                {
-                    rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized * MaxSpeed + new Vector3(0, rb.velocity.y, 0);
-                }
-                rb.AddForce(-transform.up * FallingSpeedOnWall * Time.deltaTime);
-                Debug.Log(rb.velocity.y);
+                rb.AddForce(transform.up * 5);
+                //Debug.Log(rb.velocity.y);
                 break;
             case MovementState.WallCling:
                 break;
@@ -384,4 +416,9 @@ public class PlayerMovement : MonoBehaviour
 	    Debug.Log("WallCling");
 	    rb.velocity -= transform.up * FallingSpeedOnWall * Time.deltaTime;
 	}
+
+    public MovementState GetMovementState()
+    {
+        return myMovementState;
+    }
 }

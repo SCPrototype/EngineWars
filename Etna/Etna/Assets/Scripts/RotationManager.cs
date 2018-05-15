@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotationManager : MonoBehaviour {
+public class RotationManager : MonoBehaviour
+{
 
     //Maximum angle the camera can look up and down
     public int cameraMaxYRotation;
@@ -13,15 +14,19 @@ public class RotationManager : MonoBehaviour {
     float rotationX = 0;
     float rotationY = 0;
     Quaternion startRotation;
+    private PlayerMovement player;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         startRotation = transform.localRotation;
+       
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (!GameMenu_Handler.Paused)
         {
             HandleRotation();
@@ -30,6 +35,8 @@ public class RotationManager : MonoBehaviour {
 
     private void HandleRotation()
     {
+
+
         //rotationX keeps track of the mouse X movement since the start of the game.
         rotationX += Input.GetAxis("Mouse X") * XSensitivity;
         rotationY += Input.GetAxis("Mouse Y") * YSensitivity;
@@ -42,5 +49,6 @@ public class RotationManager : MonoBehaviour {
 
         //Set the cat rotation based on the movement of the mouse since the start of the game.
         transform.localRotation = startRotation * test;
+
     }
 }
