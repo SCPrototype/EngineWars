@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     public float JumpHeight;
     private bool isGrounded;
     private bool isOnWall;
+    public float FallingSpeedOnWall;
+
     private Rigidbody rb;
     private const float groundDrag = 8f;
     private const float airDrag = 0.1f;
@@ -89,6 +91,8 @@ public class PlayerMovement : MonoBehaviour
             if (collidedObject.tag == "Ground")
             {
                 isGrounded = true;
+                rb.useGravity = true;
+                myMovementState = MovementState.Run;
                 break;
             }
         }
@@ -99,14 +103,17 @@ public class PlayerMovement : MonoBehaviour
     private void HandleWall()
     {
         isOnWall = false;
+        rb.useGravity = true;
         Collider[] allOverlappingCollidersLeft = Physics.OverlapBox(rightCollider.bounds.center, rightCollider.bounds.extents);
 
         foreach (Collider collidedObject in allOverlappingCollidersLeft)
         {
-            if (collidedObject.tag == "Wall")
+            if (collidedObject.tag == "Wall" && isGrounded == false)
             {
                 Debug.Log("Character is on a wall left");
                 isOnWall = true;
+                rb.useGravity = false;
+                myMovementState = MovementState.WallRun;
                 break;
             }
         }
@@ -115,10 +122,12 @@ public class PlayerMovement : MonoBehaviour
 
         foreach (Collider collidedObject in allOverlappingCollidersRight)
         {
-            if (collidedObject.tag == "Wall")
+            if (collidedObject.tag == "Wall" && isGrounded == false)
             {
                 Debug.Log("Character is on a wall right");
                 isOnWall = true;
+                rb.useGravity = false;
+                myMovementState = MovementState.WallRun;
                 break;
             }
         }
@@ -126,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleInput()
     {
-        if (isOnWall)
+        /*if (isOnWall)
         {
             rb.useGravity = false;
             isGrounded = true;
@@ -134,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             rb.useGravity = true;
-        }
+        }*/
         if (isGrounded)
         {
             if (myMovementState != MovementState.Vault && myMovementState != MovementState.Slide)
@@ -184,6 +193,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            if (myMovementState == MovementState.WallRun)
+            {
+
+            }
             rb.drag = airDrag;
             if (Input.GetKey(KeyCode.W))
             {
@@ -299,6 +312,14 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case MovementState.WallRun:
+                rb.AddForce(transform.forward * MovementSpeed * Time.deltaTime);
+                
+                if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude >= MaxSpeed)
+                {
+                    rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized * MaxSpeed + new Vector3(0, rb.velocity.y, 0);
+                }
+                rb.AddForce(-transform.up * FallingSpeedOnWall * Time.deltaTime);
+                Debug.Log(rb.velocity.y);
                 break;
             case MovementState.WallCling:
                 break;
@@ -356,4 +377,11 @@ public class PlayerMovement : MonoBehaviour
         myMovementState = MovementState.Jump;
         rb.AddForce(transform.up * JumpHeight);
     }
+
+    public void WallCling()
+	{		
+	    myMovementState = MovementState.WallCling;
+	    Debug.Log("WallCling");
+	    rb.velocity -= transform.up * FallingSpeedOnWall * Time.deltaTime;
+	}
 }
