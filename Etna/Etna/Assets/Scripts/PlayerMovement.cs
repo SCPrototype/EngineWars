@@ -89,6 +89,8 @@ public class PlayerMovement : MonoBehaviour
             if (collidedObject.tag == "Ground")
             {
                 isGrounded = true;
+                rb.useGravity = true;
+                myMovementState = MovementState.Walk;
                 break;
             }
         }
@@ -99,23 +101,26 @@ public class PlayerMovement : MonoBehaviour
     private void HandleWall()
     {
         isOnWall = false;
+        rb.useGravity = true;
         Collider[] allOverlappingCollidersLeft = Physics.OverlapBox(rightCollider.bounds.center, rightCollider.bounds.extents);
 
         foreach (Collider collidedObject in allOverlappingCollidersLeft)
         {
-            if (collidedObject.tag == "Wall")
+            if (collidedObject.tag == "Wall" && isGrounded == false)
             {
+                isOnWall = true;
+                rb.useGravity = false;
                 myMovementState = MovementState.WallRun;
                 break;
             }
         }
-
         Collider[] allOverlappingCollidersRight = Physics.OverlapBox(leftCollider.bounds.center, leftCollider.bounds.extents);
-
         foreach (Collider collidedObject in allOverlappingCollidersRight)
         {
-            if (collidedObject.tag == "Wall")
+            if (collidedObject.tag == "Wall" && isGrounded == false)
             {
+                isOnWall = true;
+                rb.useGravity = false;
                 myMovementState = MovementState.WallRun;
                 break;
             }
@@ -170,8 +175,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            if(myMovementState == MovementState.WallRun)
+            {
+
+            }
             rb.drag = 0.1f;
         }
+
+        
 
         //if (rb.velocity.magnitude >= 0.3f)
         //{
@@ -236,9 +247,15 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case MovementState.WallRun:
-                Debug.Log("Wallrunning");
-                rb.velocity += transform.forward * MovementSpeed * Time.deltaTime;
-                rb.velocity -= transform.up * FallingSpeedOnWall * Time.deltaTime;
+                
+                rb.AddForce(transform.forward * MovementSpeed * Time.deltaTime);
+
+                if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude >= MaxSpeed)
+                {
+                    rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized * MaxSpeed + new Vector3(0, rb.velocity.y, 0);
+                }
+                rb.AddForce(-transform.up * FallingSpeedOnWall * Time.deltaTime);
+                Debug.Log(rb.velocity.y);
                 break;
             case MovementState.WallCling:
                 break;
@@ -297,8 +314,10 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(transform.up * JumpHeight);
     }
 
-    public void WallRunning()
+    public void WallCling()
     {
-
+        myMovementState = MovementState.WallCling;
+        Debug.Log("WallCling");
+        rb.velocity -= transform.up * FallingSpeedOnWall * Time.deltaTime;
     }
 }

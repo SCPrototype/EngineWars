@@ -164,7 +164,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4559298257844626, guid: 0b84677d66f88c34e9cdcf670195b5e3, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 15.03
+      value: 17.45
       objectReference: {fileID: 0}
     - target: {fileID: 4559298257844626, guid: 0b84677d66f88c34e9cdcf670195b5e3, type: 2}
       propertyPath: m_LocalRotation.x
@@ -547,7 +547,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4347848090155092, guid: fec91372d9fbf4049b4c6f5e1b819d61, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.93
       objectReference: {fileID: 0}
     - target: {fileID: 4347848090155092, guid: fec91372d9fbf4049b4c6f5e1b819d61, type: 2}
       propertyPath: m_LocalRotation.x
@@ -599,7 +599,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4347848090155092, guid: fec91372d9fbf4049b4c6f5e1b819d61, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 16.84
+      value: 18.96
       objectReference: {fileID: 0}
     - target: {fileID: 4347848090155092, guid: fec91372d9fbf4049b4c6f5e1b819d61, type: 2}
       propertyPath: m_LocalRotation.x
@@ -682,6 +682,11 @@ Prefab:
       propertyPath: gameHandler
       value: 
       objectReference: {fileID: 163669085}
+    - target: {fileID: 114918125564102170, guid: 55385a3f5a5bc7249ae514c8a13fee29,
+        type: 2}
+      propertyPath: FallingSpeedOnWall
+      value: 200
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 55385a3f5a5bc7249ae514c8a13fee29, type: 2}
   m_IsPrefabParent: 0
@@ -1579,7 +1584,7 @@ GameObject:
   - component: {fileID: 1412405612}
   m_Layer: 0
   m_Name: Wall (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1819,7 +1824,7 @@ GameObject:
   - component: {fileID: 1488727673}
   m_Layer: 0
   m_Name: Wall (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1903,7 +1908,7 @@ GameObject:
   - component: {fileID: 1497142820}
   m_Layer: 0
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2042,7 +2047,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4347848090155092, guid: fec91372d9fbf4049b4c6f5e1b819d61, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 8.549999
+      value: 10.05
       objectReference: {fileID: 0}
     - target: {fileID: 4347848090155092, guid: fec91372d9fbf4049b4c6f5e1b819d61, type: 2}
       propertyPath: m_LocalRotation.x
@@ -2177,7 +2182,7 @@ GameObject:
   - component: {fileID: 1789299428}
   m_Layer: 0
   m_Name: Wall (3)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2395,7 +2400,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1897433343}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 1f0035b6d6a6d0941af2c5f5ecdfdb16, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -2415,8 +2420,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1897433343}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.5676918, y: 2.2603788, z: 22.52444}
-  m_LocalScale: {x: 0.1, y: 6, z: 20}
+  m_LocalPosition: {x: -6.15, y: 2.8, z: 86.46}
+  m_LocalScale: {x: 0.1, y: 10, z: 177.2}
   m_Children: []
   m_Father: {fileID: 260115309}
   m_RootOrder: 0
@@ -2588,7 +2593,7 @@ GameObject:
   - component: {fileID: 2034649666}
   m_Layer: 0
   m_Name: Wall (4)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
