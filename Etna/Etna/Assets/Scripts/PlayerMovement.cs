@@ -24,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     private float baseFOV;
     private CameraManager camManager;
 
-    private BoxCollider feetCollider;
     private SphereCollider rangeCollider;
 
     private BoxCollider interactCollider;
@@ -67,6 +66,8 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip SlideSound;
     public AudioClip RunSound;
     private const float pitchShift = 0.15f;
+    private const float idleThreshold = 0.1f;
+    private const float groundedCheckDist = 0.2f;
 
 
     // Use this for initialization
@@ -75,7 +76,6 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         myAudioSource = GetComponent<AudioSource>();
         baseFOV = Camera.main.fieldOfView;
-        feetCollider = GameObject.Find("FeetCollider").GetComponent<BoxCollider>();
         rangeCollider = GameObject.Find("RangeCollider").GetComponent<SphereCollider>();
         interactCollider = GameObject.Find("InteractCollider").GetComponent<BoxCollider>();
         if (GetComponent<CameraManager>() != null)
@@ -106,33 +106,44 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleGrounded()
     {
-        Collider[] allOverlappingColliders = Physics.OverlapBox(feetCollider.bounds.center, feetCollider.bounds.extents);
-
-        foreach (Collider collidedObject in allOverlappingColliders)
+        RaycastHit[] hit = new RaycastHit[5];
+        Debug.DrawRay(transform.position, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
+        Debug.DrawRay(transform.position + (transform.forward + transform.right) * 0.4f, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
+        Debug.DrawRay(transform.position + (- transform.forward + transform.right) * 0.4f, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
+        Debug.DrawRay(transform.position + (- transform.forward - transform.right) * 0.4f, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
+        Debug.DrawRay(transform.position + (transform.forward - transform.right) * 0.4f, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
+        if (Physics.Raycast(transform.position, new Vector3(0, -1, 0), out hit[0], transform.lossyScale.y + groundedCheckDist) || 
+            Physics.Raycast(transform.position + (transform.forward + transform.right) * 0.4f, new Vector3(0, -1, 0), out hit[1], transform.lossyScale.y + groundedCheckDist) || 
+            Physics.Raycast(transform.position + (-transform.forward + transform.right) * 0.4f, new Vector3(0, -1, 0), out hit[2], transform.lossyScale.y + groundedCheckDist) || 
+            Physics.Raycast(transform.position + (-transform.forward - transform.right) * 0.4f, new Vector3(0, -1, 0), out hit[3], transform.lossyScale.y + groundedCheckDist) || 
+            Physics.Raycast(transform.position + (transform.forward - transform.right) * 0.4f, new Vector3(0, -1, 0), out hit[4], transform.lossyScale.y + groundedCheckDist))
         {
-            if (collidedObject.tag == "Ground")
+            for (int i = 0; i < hit.Length; i++)
             {
-                if (!isGrounded)
-                {
-                    isGrounded = true;
-                    myAudioSource.clip = LandingSound;
-                    myAudioSource.loop = false;
-                    myAudioSource.pitch = UnityEngine.Random.Range(1 - pitchShift, 1 + pitchShift);
-                    myAudioSource.Play();
-                    prevWall = null;
+                if (hit[i].transform != null) {
+                    if (hit[i].transform.tag == "Ground") {
+                        if (!isGrounded) {
+                            isGrounded = true;
+                            myAudioSource.clip = LandingSound;
+                            myAudioSource.loop = false;
+                            myAudioSource.pitch = UnityEngine.Random.Range(1 - pitchShift, 1 + pitchShift);
+                            myAudioSource.Play();
+                            prevWall = null;
+                        }
+                        isOnWall = false;
+                        rb.useGravity = true;
+                        if (myMovementState == MovementState.WallRun || myMovementState == MovementState.WallClimb)
+                        {
+                            SwitchState(MovementState.Run);
+                        }
+                        if (isCameraTilted == true)
+                        {
+                            camManager.ResetRotation(rb);
+                            isCameraTilted = false;
+                        }
+                        return;
+                    }
                 }
-                isOnWall = false;
-                rb.useGravity = true;
-                if (myMovementState == MovementState.WallRun || myMovementState == MovementState.WallClimb)
-                {
-                    SwitchState(MovementState.Run);
-                }
-                if (isCameraTilted == true)
-                {
-                    camManager.ResetRotation(rb);
-                    isCameraTilted = false;
-                }
-                return;
             }
         }
         isGrounded = false;
@@ -275,10 +286,6 @@ public class PlayerMovement : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.LeftShift))
                 {
                     checkInteractable(KeyCode.LeftShift);
-                    /*if ((myMovementState == MovementState.Idle || myMovementState == MovementState.Walk || myMovementState == MovementState.Run) && isGrounded)
-                    {
-                        //Jump();
-                    }*/
                 }
             }
         }
@@ -329,6 +336,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void SwitchState(MovementState state)
     {
+        Debug.Log("Switching state from :" + myMovementState + ": to :" + state + ":");
         switch (state)
         {
             case MovementState.Idle:
@@ -360,7 +368,7 @@ public class PlayerMovement : MonoBehaviour
                 myMovementState = MovementState.WallRun;
                 break;
             case MovementState.WallClimb:
-                Debug.Log("wall climbing");
+                //Debug.Log("wall climbing");
                 if (myMovementState != MovementState.WallClimb && myMovementState != MovementState.Fall && myMovementState != MovementState.WallJump)
                 {
                     rb.velocity = new Vector3(0, runIntoWallVelocity.magnitude, 0);
@@ -368,6 +376,11 @@ public class PlayerMovement : MonoBehaviour
                 myMovementState = MovementState.WallClimb;
                 break;
             case MovementState.WallJump:
+                //Debug.Log("Wall jumping");
+                myAudioSource.clip = JumpSound;
+                myAudioSource.loop = false;
+                myAudioSource.pitch = UnityEngine.Random.Range(1 - pitchShift, 1 + pitchShift);
+                myAudioSource.Play();
                 myMovementState = MovementState.WallJump;
                 break;
             default:
@@ -377,16 +390,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleState()
     {
+        Debug.Log(rb.velocity);
         //Debug.Log(new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
         //Debug.Log(myMovementState);
         switch (myMovementState)
         {
             case MovementState.Idle:
-                if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude > 0.1f)
+                if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude > idleThreshold)
                 {
                     SwitchState(MovementState.Run);
                 }
-                if (rb.velocity.y < 0)
+                if (!isGrounded)
                 {
                     SwitchState(MovementState.Fall);
                 }
@@ -400,29 +414,39 @@ public class PlayerMovement : MonoBehaviour
                     myAudioSource.pitch = 1;
                     myAudioSource.Play();
                 }
-                if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude <= 0.1f)
+                if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude <= idleThreshold)
                 {
                     SwitchState(MovementState.Idle);
                 }
-                if (rb.velocity.y < 0)
+                if (!isGrounded)
                 {
                     SwitchState(MovementState.Fall);
                 }
                 //cameraBob();
                 break;
             case MovementState.Jump:
-                //Debug.Log(rb.velocity.y);
                 CheckForWall();
                 if (rb.velocity.y < 0)
                 {
                     SwitchState(MovementState.Fall);
+                }
+                if (isGrounded)
+                {
+                    if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude > idleThreshold)
+                    {
+                        SwitchState(MovementState.Run);
+                    }
+                    else
+                    {
+                        SwitchState(MovementState.Idle);
+                    }
                 }
                 break;
             case MovementState.Fall:
                 CheckForWall();
                 if (isGrounded)
                 {
-                    if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude > 0)
+                    if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude > idleThreshold)
                     {
                         SwitchState(MovementState.Run);
                     }
@@ -573,7 +597,7 @@ public class PlayerMovement : MonoBehaviour
         SwitchState(MovementState.Slide);
     }
 
-    public void Jump()
+    private void Jump()
     {
         rb.AddForce(transform.up * JumpHeight, ForceMode.Impulse);
         myAudioSource.clip = JumpSound;
