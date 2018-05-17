@@ -35,6 +35,8 @@ public class CameraManager : MonoBehaviour {
     private float baseFOV;
     private float targetFOV;
 
+    private bool shouldResetRotation = false;
+
     // Use this for initialization
     void Start()
     {
@@ -55,31 +57,43 @@ public class CameraManager : MonoBehaviour {
         }
     }
 
-    public void Rotate(float amount)
+    public void TurnAround()
     {
-        {
-            ShouldObjectRotateX = false;
-            ShouldObjectRotateY = false;
-            ShouldCameraRotateX = true;
-            ShouldCameraRotateY = true;
+        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y -180, transform.localEulerAngles.z);
 
-            useMaxXRotation = true;
+        //Dont touch the 3 lines below here, they wont help you.
+        startRotation = transform.localRotation;
+        rotationX = 0;
+        rotationY = 0;
+    }
 
-            //Should the camera rotation be originated from the object rotation. (set to true during wall running)
-            shouldAlignToObject = true;
+    public void Rotate(float amount, Rigidbody rb)
+    {
+        ShouldObjectRotateX = false;
+        ShouldObjectRotateY = false;
+        ShouldCameraRotateX = true;
+        ShouldCameraRotateY = true;
 
-            //The desired rotation
-            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, amount);
+        useMaxXRotation = true;
 
-            //Dont touch the 3 lines below here, they wont help you.
-            startRotation = transform.localRotation;
-            rotationX = 0;
-            rotationY = 0;
-        }
+        //Should the camera rotation be originated from the object rotation. (set to true during wall running)
+        shouldAlignToObject = true;
+
+        //The desired rotation
+        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, amount);
+
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+
+        //Dont touch the 3 lines below here, they wont help you.
+        startRotation = transform.localRotation;
+        rotationX = 0;
+        rotationY = 0;
+
+        shouldResetRotation = true;
     }
 
     //This one reverts the character rotation and gives part of the control over the rotations back to the character, also deactivates MaxXRotation. @PIETER
-    public void ResetRotation()
+    public void ResetRotation(Rigidbody rb)
     {
         ShouldObjectRotateX = true;
         ShouldObjectRotateY = false;
@@ -89,9 +103,14 @@ public class CameraManager : MonoBehaviour {
         useMaxXRotation = false;
 
         shouldAlignToObject = false;
-
-        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
-        startRotation = transform.localRotation;
+        //transform.localEulerAngles = startRotation.eulerAngles;
+        if (shouldResetRotation)
+        {
+            transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+            startRotation = transform.localRotation;
+            shouldResetRotation = false;
+        }
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
     private void HandleRotation()
@@ -171,8 +190,8 @@ public class CameraManager : MonoBehaviour {
         if (Mathf.Abs(targetFOV - Camera.main.fieldOfView) >= 1)
         {
             Camera.main.fieldOfView += (FOVChange * (Time.deltaTime / FOVChangeSpeed)) * Mathf.Sign(targetFOV - Camera.main.fieldOfView);
-            Debug.Log("cam FOV: " + Camera.main.fieldOfView);
-            Debug.Log("target FOV: " + targetFOV);
+            //Debug.Log("cam FOV: " + Camera.main.fieldOfView);
+            //Debug.Log("target FOV: " + targetFOV);
         }
         else
         {
