@@ -390,9 +390,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleState()
     {
-        Debug.Log(rb.velocity);
-        //Debug.Log(new Vector2(rb.velocity.x, rb.velocity.z).magnitude);
-        //Debug.Log(myMovementState);
         switch (myMovementState)
         {
             case MovementState.Idle:
