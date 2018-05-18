@@ -215,7 +215,7 @@ public class PlayerMovement : MonoBehaviour
                     Debug.Log("Jumping to the left");
                     rb.AddForce(new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * JumpFromWallStrength * Time.fixedDeltaTime);
                     //rb.AddForce(-transform.right * JumpFromWallStrength / 2);
-                    rb.AddForce(transform.up * JumpFromWallStrength * 1.5f * Time.fixedDeltaTime);
+                    rb.AddForce(transform.up * JumpFromWallStrength * 1 * Time.fixedDeltaTime);
                     camManager.ResetRotation(rb);
                 }
                 else if (myWallSide == WallSide.Left)
@@ -223,7 +223,7 @@ public class PlayerMovement : MonoBehaviour
                     Debug.Log("Jumping to the right");
                     rb.AddForce(new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * JumpFromWallStrength * Time.fixedDeltaTime);
                    // rb.AddForce(transform.right * JumpFromWallStrength / 2);
-                    rb.AddForce(transform.up * JumpFromWallStrength * 1.5f * Time.fixedDeltaTime);
+                    rb.AddForce(transform.up * JumpFromWallStrength * 1f * Time.fixedDeltaTime);
                     camManager.ResetRotation(rb);
                 }
                 else if (myWallSide == WallSide.Front)
