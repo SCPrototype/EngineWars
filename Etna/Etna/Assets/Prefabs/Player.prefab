@@ -549,9 +549,9 @@ MonoBehaviour:
   MovementSpeed: 5000
   MovementSpeedInAir: 25
   MaxSpeed: 8
-  JumpHeight: 13.5
+  JumpHeight: 650
   FallingSpeedOnWall: 0
-  JumpFromWallStrength: 300
+  JumpFromWallStrength: 14000
   JumpSound: {fileID: 8300000, guid: b004daaae07216246a7a128e9055c292, type: 3}
   LandingSound: {fileID: 8300000, guid: 4a8aa2abc6e586d47913485eae9f2df4, type: 3}
   SlideSound: {fileID: 8300000, guid: b445cc1974720f74bae4d8ff23b681b1, type: 3}
