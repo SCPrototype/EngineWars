@@ -9,37 +9,18 @@ public class Resources : MonoBehaviour
     private float amountOfEnergyStored = 0;
     public float amountOfTimeLightDecay;
     private float timeLeft = 0;
-    private Text lightUItext;
-    private GameObject CrystalPower;
+    public float amountOfLightNeededToActivate;
 
     // Use this for initialization
     void Start()
     {
-        CrystalPower = GameObject.Find("CrystalPower");
-        lightUItext = CrystalPower.GetComponent<Text>();
-        if (null == CrystalPower)
-        {
-            Debug.Log("UI not found");
-        }
-        if (null == lightUItext)
-        {
-            Debug.Log("Light text not found");
-        }
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (lightUItext != null)
-        {
-            lightUItext.text = amountOfEnergyStored.ToString();
-            timeLeft += Time.deltaTime;
-            if (timeLeft >= amountOfTimeLightDecay && amountOfEnergyStored > 0)
-            {
-                amountOfEnergyStored--;
-                timeLeft = 0;
-            }
-        }
+       
     }
 
     public void AddEnergy(float amount)
@@ -58,9 +39,9 @@ public class Resources : MonoBehaviour
 
     public bool CanActivateLight()
     {
-        if (amountOfEnergyStored >= 20)
+        if (amountOfEnergyStored >= amountOfLightNeededToActivate)
         {
-            amountOfEnergyStored -= 20;
+            amountOfEnergyStored -= amountOfLightNeededToActivate;
             return true;
         }
         else
