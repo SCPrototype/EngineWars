@@ -21,9 +21,14 @@ GameObject:
   - component: {fileID: 4407203367746902}
   - component: {fileID: 33675358719853442}
   - component: {fileID: 23504849654651504}
+  - component: {fileID: 65739767195522464}
+  - component: {fileID: 65855359229752752}
+  - component: {fileID: 65960053970268762}
+  - component: {fileID: 65081924070391070}
+  - component: {fileID: 65726601579381176}
   m_Layer: 0
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,8 +84,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1994252306478130}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.2, y: 24.027514, z: -25.000229}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.074501336, y: 17.625467, z: -25.657772}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4104295830803216}
@@ -108,13 +113,12 @@ MeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1752811104501228}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: f546f8723ea9b53478d44998d0d762c6, type: 3}
   m_StaticBatchInfo:
@@ -143,13 +147,12 @@ MeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1423732803911426}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 92045e1054911c0449fda104444a22b6, type: 2}
   m_StaticBatchInfo:
@@ -185,3 +188,63 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1423732803911426}
   m_Mesh: {fileID: 4300002, guid: f546f8723ea9b53478d44998d0d762c6, type: 3}
+--- !u!65 &65081924070391070
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1423732803911426}
+  m_Material: {fileID: 13400000, guid: 33aa51db737590b45805f0a6ff9f6fc7, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2200, y: 185.00014, z: 5000.001}
+  m_Center: {x: 1450, y: 92.50007, z: 0}
+--- !u!65 &65726601579381176
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1423732803911426}
+  m_Material: {fileID: 13400000, guid: e0928c2ce74b95249ac8b9b6069c78c4, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 700, y: 185.00014, z: 1}
+  m_Center: {x: 0, y: 92.50007, z: 500}
+--- !u!65 &65739767195522464
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1423732803911426}
+  m_Material: {fileID: 13400000, guid: 33aa51db737590b45805f0a6ff9f6fc7, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 700, y: 185.00014, z: 2450}
+  m_Center: {x: 0, y: 92.50007, z: -1275}
+--- !u!65 &65855359229752752
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1423732803911426}
+  m_Material: {fileID: 13400000, guid: 33aa51db737590b45805f0a6ff9f6fc7, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 700, y: 185.00014, z: 2000}
+  m_Center: {x: 0, y: 92.50007, z: 1500.5}
+--- !u!65 &65960053970268762
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1423732803911426}
+  m_Material: {fileID: 13400000, guid: 33aa51db737590b45805f0a6ff9f6fc7, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2200, y: 185.00014, z: 5000.001}
+  m_Center: {x: -1450, y: 92.50007, z: 0}

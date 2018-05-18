@@ -223,7 +223,22 @@ public class PlayerMovement : MonoBehaviour
                 else if (myWallSide == WallSide.Front)
                 {
                     Debug.Log("Jumping backwards");
-                    rb.AddForce(-transform.forward * JumpFromWallStrength);
+                    RaycastHit hit;
+                    Debug.DrawRay(new Vector3(transform.position.x, currentWall.transform.position.y, transform.position.z), new Vector3(currentWall.transform.position.x, transform.position.y, currentWall.transform.position.z) - transform.position, Color.green, 15);
+                    if (Physics.Raycast(new Vector3(transform.position.x, currentWall.transform.position.y, transform.position.z), new Vector3(currentWall.transform.position.x, transform.position.y, currentWall.transform.position.z) - transform.position, out hit, 4))
+                    {
+                        Debug.Log(hit.transform.name);
+                        if (hit.transform.gameObject == currentWall)
+                        {
+                            rb.AddForce(hit.normal * JumpFromWallStrength);
+                        } else
+                        {
+                            rb.AddForce(-transform.forward * JumpFromWallStrength);
+                        }
+                    } else
+                    {
+                        rb.AddForce(-transform.forward * JumpFromWallStrength);
+                    }
                     // rb.AddForce(transform.right * JumpFromWallStrength / 2);
                     rb.AddForce(transform.up * JumpFromWallStrength * 1.5f);
                     camManager.ResetRotation(rb);
