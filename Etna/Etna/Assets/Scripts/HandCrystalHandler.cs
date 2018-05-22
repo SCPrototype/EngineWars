@@ -21,6 +21,8 @@ public class HandCrystalHandler : MonoBehaviour
         gameHandler = GameObject.Find("GameHandler");
         resources = gameHandler.GetComponent<Resources>();
         handCrystalLight = handCrystal.GetComponent<Light>();
+        handCrystalLight.intensity = LightIntensity;
+        handCrystalLight.range = LightRadius;
     }
 
     // Update is called once per frame

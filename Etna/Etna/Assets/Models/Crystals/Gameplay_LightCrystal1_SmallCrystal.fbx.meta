@@ -1,5 +1,7 @@
 fileFormatVersion: 2
-guid: 6fd643ab7b0aa0645b700aeebb454229
+guid: 2b8a3ffc13e77a445a32276150083c1d
+timeCreated: 1526647598
+licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -35,6 +37,7 @@ ModelImporter:
     2300000: pPlatonic28
     3300000: pPlatonic28
     4300000: pPlatonic28
+    9500000: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -54,7 +57,6 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -66,7 +68,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 5
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
@@ -110,7 +112,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

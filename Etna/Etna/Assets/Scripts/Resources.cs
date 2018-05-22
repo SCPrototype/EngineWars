@@ -20,7 +20,20 @@ public class Resources : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        DecreaseLight();
+    }
+
+    private void DecreaseLight()
+    {
+        if(amountOfEnergyStored > 0)
+        {
+            timeLeft += Time.deltaTime;
+            if(timeLeft > amountOfTimeLightDecay)
+            {
+                timeLeft = 0;
+                amountOfEnergyStored--;
+            }
+        }
     }
 
     public void AddEnergy(float amount)
