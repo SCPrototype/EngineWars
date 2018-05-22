@@ -28,6 +28,10 @@ public class HandCrystalHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(resources.GetAmountOfEnergy() > 1)
+        {
+            lightIsOn = true;
+        }
         HandleLight();
         if (resources.GetAmountOfEnergy() < 10 && resources.GetAmountOfEnergy() > 0 && isFlickering == false)
         {
@@ -36,16 +40,6 @@ public class HandCrystalHandler : MonoBehaviour
         else
         {
             isFlickering = false;
-        }
-    }
-
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.tag == "CollectibleLight")
-        {
-            resources.AddEnergy(20);
-            lightIsOn = true;
-            Destroy(col.gameObject);
         }
     }
 

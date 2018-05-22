@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -84,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
         {
             camManager = GetComponent<CameraManager>();
         }
+       
     }
 
     // Update is called once per frame
@@ -350,12 +352,12 @@ public class PlayerMovement : MonoBehaviour
         bool text2 = false;
         bool text3 = false;
         if (checkInteractable(KeyCode.E) == true)
-        { InteractText.text = "Press E to interact."; text1 = true; } 
+        { InteractText.text = "Press E to interact."; text1 = true; }
         if (checkInteractable(KeyCode.Space) == true)
         { InteractText.text = "Press Space to interact."; text2 = true; }
         if (checkInteractable(KeyCode.LeftShift) == true)
         { InteractText.text = "Press Shift to interact."; text3 = true; }
-        if(text1 == false && text2 == false && text3 == false)
+        if (text1 == false && text2 == false && text3 == false)
         { InteractText.text = ""; }
     }
 

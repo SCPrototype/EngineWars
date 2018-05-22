@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4261575354287296}
   - component: {fileID: 95850344491485594}
+  - component: {fileID: 114833580108347822}
+  - component: {fileID: 135466190583157878}
   m_Layer: 0
   m_Name: Crystal3
   m_TagString: Untagged
@@ -39,7 +41,7 @@ GameObject:
   - component: {fileID: 23706202737668798}
   m_Layer: 0
   m_Name: pPlatonic29
-  m_TagString: Untagged
+  m_TagString: CollectibleLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1387640682320442}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.21527374, y: 0.146, z: 9.761444}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4838843574445958}
@@ -66,7 +68,7 @@ Transform:
   m_GameObject: {fileID: 1894436956504236}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.23642774, y: 0.10015864, z: -0.071402505}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 4261575354287296}
   m_RootOrder: 0
@@ -129,3 +131,28 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114833580108347822
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1387640682320442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb1b5ae1e0b0f634286d662e20d1b86d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactKey: 101
+  pickUp: {fileID: 1387640682320442}
+--- !u!135 &135466190583157878
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1387640682320442}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

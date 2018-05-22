@@ -39,9 +39,10 @@ GameObject:
   - component: {fileID: 4267530873610874}
   - component: {fileID: 95047791395932982}
   - component: {fileID: 108015107597330826}
+  - component: {fileID: 114337987586640438}
   m_Layer: 0
   m_Name: Crystal1
-  m_TagString: CollectibleLight
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1907792438062292}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.71, z: 0}
+  m_LocalPosition: {x: 0, y: 0.394, z: 2.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4093492993200534}
@@ -167,6 +168,19 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114337987586640438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1907792438062292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb1b5ae1e0b0f634286d662e20d1b86d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactKey: 102
+  pickUp: {fileID: 1907792438062292}
 --- !u!136 &136617422931897280
 CapsuleCollider:
   m_ObjectHideFlags: 1
