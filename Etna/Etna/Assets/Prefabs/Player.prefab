@@ -64,6 +64,7 @@ GameObject:
   - component: {fileID: 114141934471476030}
   - component: {fileID: 82510873874254902}
   - component: {fileID: 114532635651301590}
+  - component: {fileID: 114756492954716324}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -140,8 +141,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1726874861954776}
-  m_LocalRotation: {x: -0, y: 0.64748573, z: -0, w: 0.7620775}
-  m_LocalPosition: {x: 0.77, y: 24.43, z: 20.5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.57004, y: 0.26, z: -0.9810959}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4496200506075780}
@@ -775,6 +776,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profile: {fileID: 11400000, guid: d982e879ff67b4d3fb6522d08c3cd5af, type: 2}
+--- !u!114 &114756492954716324
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1726874861954776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b422bfc65f884c428912875fdda0559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114917679815995388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -803,6 +815,7 @@ MonoBehaviour:
   JumpHeight: 650
   FallingSpeedOnWall: 0
   JumpFromWallStrength: 14000
+  InteractText: {fileID: 0}
   JumpSound: {fileID: 8300000, guid: b004daaae07216246a7a128e9055c292, type: 3}
   LandingSound: {fileID: 8300000, guid: 4a8aa2abc6e586d47913485eae9f2df4, type: 3}
   SlideSound: {fileID: 8300000, guid: b445cc1974720f74bae4d8ff23b681b1, type: 3}

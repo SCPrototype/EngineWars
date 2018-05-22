@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(AudioSource))]
 public class PlayerMovement : MonoBehaviour
 {
@@ -31,10 +31,12 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 vaultStart;
     private Vector3 vaultTarget;
 
-    private Vector3 runIntoWallVelocity;		
+    private Vector3 runIntoWallVelocity;
     private Vector3 playerMovementOnWall;
     public float JumpFromWallStrength;
     private bool isCameraTilted = false;
+
+    public Text InteractText;
 
     public enum MovementState
     {
@@ -50,12 +52,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private enum WallSide
-	{
-	    Left,
-	    Right,
+    {
+        Left,
+        Right,
         Front,
-	    None
-	}
+        None
+    }
 
     private MovementState myMovementState = MovementState.Idle;
     private WallSide myWallSide;
@@ -97,6 +99,7 @@ public class PlayerMovement : MonoBehaviour
             HandleGrounded();
             HandleState();
             HandleCamera();
+            HandleInteractible();
         }
         else if (!rb.isKinematic)
         {
@@ -239,11 +242,13 @@ public class PlayerMovement : MonoBehaviour
                         if (hit.transform.gameObject == currentWall)
                         {
                             rb.AddForce(hit.normal * JumpFromWallStrength * Time.fixedDeltaTime);
-                        } else
+                        }
+                        else
                         {
                             rb.AddForce(-transform.forward * JumpFromWallStrength * Time.fixedDeltaTime);
                         }
-                    } else
+                    }
+                    else
                     {
                         rb.AddForce(-transform.forward * JumpFromWallStrength * Time.fixedDeltaTime);
                     }
@@ -291,15 +296,19 @@ public class PlayerMovement : MonoBehaviour
                 }
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    checkInteractable(KeyCode.Space);
-                    if ((myMovementState == MovementState.Idle|| myMovementState == MovementState.Run) && isGrounded)
+                    activateInteractable(KeyCode.Space);
+                    if ((myMovementState == MovementState.Idle || myMovementState == MovementState.Run) && isGrounded)
                     {
                         Jump();
                     }
                 }
                 if (Input.GetKeyDown(KeyCode.LeftShift))
                 {
-                    checkInteractable(KeyCode.LeftShift);
+                    activateInteractable(KeyCode.LeftShift);
+                }
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    activateInteractable(KeyCode.E);
                 }
             }
         }
@@ -346,6 +355,21 @@ public class PlayerMovement : MonoBehaviour
         {
             camManager.SetFOV(baseFOV);
         }
+    }
+
+    private void HandleInteractible()
+    {
+        bool text1 = false;
+        bool text2 = false;
+        bool text3 = false;
+        if (checkInteractable(KeyCode.E) == true)
+        { InteractText.text = "Press E to interact."; text1 = true; }
+        if (checkInteractable(KeyCode.Space) == true)
+        { InteractText.text = "Press Space to interact."; text2 = true; }
+        if (checkInteractable(KeyCode.LeftShift) == true)
+        { InteractText.text = "Press Shift to interact."; text3 = true; }
+        if (text1 == false && text2 == false && text3 == false)
+        { InteractText.text = ""; }
     }
 
     private void SwitchState(MovementState state)
@@ -506,7 +530,7 @@ public class PlayerMovement : MonoBehaviour
                     {
                         break;
                     }
-                    if (i == collidedObjects.Length -1)
+                    if (i == collidedObjects.Length - 1)
                     {
                         camManager.ResetRotation(rb);
                         SwitchState(MovementState.Jump);
@@ -552,6 +576,23 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private bool checkInteractable(KeyCode key)
+    {
+        Collider[] allOverlappingColliders = Physics.OverlapBox(interactCollider.bounds.center, interactCollider.bounds.extents);
+
+        foreach (Collider collidedObject in allOverlappingColliders)
+        {
+            if (collidedObject.GetComponent<Interactable>() != null)
+            {
+                if (collidedObject.GetComponent<Interactable>().GetInteractKey() == key)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private bool activateInteractable(KeyCode key)
     {
         Collider[] allOverlappingColliders = Physics.OverlapBox(interactCollider.bounds.center, interactCollider.bounds.extents);
 
@@ -610,7 +651,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public MovementState GetMovementState()
-	{		
-	    return myMovementState;		
-	}
+    {
+        return myMovementState;
+    }
 }

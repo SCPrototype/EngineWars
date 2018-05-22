@@ -20,5 +20,6 @@ public class Interactable_Light : Interactable
     {
         Debug.Log("Static crystal clicked");
         activationLight.ActivateLight();
+        
     }
 }
