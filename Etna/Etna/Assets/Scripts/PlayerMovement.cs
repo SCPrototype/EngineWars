@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip LandingSound;
     public AudioClip SlideSound;
     public AudioClip RunSound;
-    private const float pitchShift = 0.15f;
+    private const float pitchShift = 0.05f;
     private const float idleThreshold = 0.1f;
     private const float groundedCheckDist = 0.2f;
 
@@ -178,12 +178,12 @@ public class PlayerMovement : MonoBehaviour
                             if (Vector2.Angle(new Vector2(transform.right.x, transform.right.z), new Vector2(hit.normal.x, hit.normal.z)) >= 90)
                             {
                                 myWallSide = WallSide.Right;
-                                camManager.Rotate(20, rb);
+                                camManager.Rotate(20, rb, -hit.normal);
                             }
                             else
                             {
                                 myWallSide = WallSide.Left;
-                                camManager.Rotate(-20, rb);
+                                camManager.Rotate(-20, rb, hit.normal);
                             }
                             isCameraTilted = true;
                         }
@@ -212,23 +212,26 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 if (myWallSide == WallSide.Right)
                 {
-                    Debug.Log("Jumping to the left");
-                    rb.AddForce(new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * JumpFromWallStrength * Time.fixedDeltaTime);
-                    //rb.AddForce(-transform.right * JumpFromWallStrength / 2);
-                    rb.AddForce(transform.up * JumpFromWallStrength * 1 * Time.fixedDeltaTime);
+                    //rb.AddForce(new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * JumpFromWallStrength * Time.fixedDeltaTime);
+                    if (Input.GetKey(KeyCode.A))
+                    {
+                        rb.AddForce(-transform.right * JumpFromWallStrength * Time.fixedDeltaTime);
+                    }
+                    rb.AddForce(transform.up * JumpFromWallStrength * Time.fixedDeltaTime);
                     camManager.ResetRotation(rb);
                 }
                 else if (myWallSide == WallSide.Left)
                 {
-                    Debug.Log("Jumping to the right");
-                    rb.AddForce(new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * JumpFromWallStrength * Time.fixedDeltaTime);
-                   // rb.AddForce(transform.right * JumpFromWallStrength / 2);
-                    rb.AddForce(transform.up * JumpFromWallStrength * 1f * Time.fixedDeltaTime);
+                    //rb.AddForce(new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * JumpFromWallStrength * Time.fixedDeltaTime);
+                    if (Input.GetKey(KeyCode.D))
+                    {
+                        rb.AddForce(transform.right * JumpFromWallStrength * Time.fixedDeltaTime);
+                    }
+                    rb.AddForce(transform.up * JumpFromWallStrength * Time.fixedDeltaTime);
                     camManager.ResetRotation(rb);
                 }
                 else if (myWallSide == WallSide.Front)
                 {
-                    Debug.Log("Jumping backwards");
                     RaycastHit hit;
                     Debug.DrawRay(new Vector3(transform.position.x, currentWall.transform.position.y, transform.position.z), new Vector3(currentWall.transform.position.x, transform.position.y, currentWall.transform.position.z) - transform.position, Color.green, 15);
                     if (Physics.Raycast(new Vector3(transform.position.x, currentWall.transform.position.y, transform.position.z), new Vector3(currentWall.transform.position.x, transform.position.y, currentWall.transform.position.z) - transform.position, out hit, 4))
@@ -247,14 +250,14 @@ public class PlayerMovement : MonoBehaviour
                     // rb.AddForce(transform.right * JumpFromWallStrength / 2);
                     rb.AddForce(transform.up * JumpFromWallStrength * 1.5f * Time.fixedDeltaTime);
                     camManager.ResetRotation(rb);
-                    camManager.TurnAround();
+                    //SWITCH: Turn camera around on wall jump
+                    //camManager.TurnAround();
                 }
                 prevWall = currentWall;
                 currentWall = null;
                 isOnWall = false;
                 SwitchState(MovementState.WallJump);
                 myWallSide = WallSide.None;
-                //Debug.Log("Wall is :" + myWallSide.ToString());
             }
         }
         else if (isGrounded)
@@ -351,35 +354,27 @@ public class PlayerMovement : MonoBehaviour
         switch (state)
         {
             case MovementState.Idle:
-                //Debug.Log("idling");
                 myMovementState = MovementState.Idle;
                 break;
             case MovementState.Run:
-                //Debug.Log("running");
                 myMovementState = MovementState.Run;
                 break;
             case MovementState.Jump:
-                //Debug.Log("jumping");
                 myMovementState = MovementState.Jump;
                 break;
             case MovementState.Fall:
-                //Debug.Log("falling");
                 myMovementState = MovementState.Fall;
                 break;
             case MovementState.Vault:
-                //Debug.Log("vaulting");
                 myMovementState = MovementState.Vault;
                 break;
             case MovementState.Slide:
-                //Debug.Log("sliding");
                 myMovementState = MovementState.Slide;
                 break;
             case MovementState.WallRun:
-                //Debug.Log("wall running");
                 myMovementState = MovementState.WallRun;
                 break;
             case MovementState.WallClimb:
-                //Debug.Log("wall climbing");
                 if (myMovementState != MovementState.WallClimb && myMovementState != MovementState.Fall && myMovementState != MovementState.WallJump)
                 {
                     rb.velocity = new Vector3(0, runIntoWallVelocity.magnitude, 0);
@@ -387,7 +382,6 @@ public class PlayerMovement : MonoBehaviour
                 myMovementState = MovementState.WallClimb;
                 break;
             case MovementState.WallJump:
-                //Debug.Log("Wall jumping");
                 myAudioSource.clip = JumpSound;
                 myAudioSource.loop = false;
                 myAudioSource.pitch = UnityEngine.Random.Range(1 - pitchShift, 1 + pitchShift);
@@ -430,7 +424,6 @@ public class PlayerMovement : MonoBehaviour
                 {
                     SwitchState(MovementState.Fall);
                 }
-                //cameraBob();
                 break;
             case MovementState.Jump:
                 CheckForWall();
@@ -451,7 +444,10 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case MovementState.Fall:
-                CheckForWall();
+                if (rb.velocity.y >= -0.5f)
+                {
+                    CheckForWall();
+                }
                 if (isGrounded)
                 {
                     if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude > idleThreshold)
@@ -469,7 +465,6 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case MovementState.Vault:
-                //Debug.Log("vaulting");
                 transform.position += (vaultTarget - vaultStart) * Time.fixedDeltaTime * (0.5f + (velocityHolder.magnitude / 4));
                 if (Vector3.Distance(transform.position, vaultStart) >= Vector3.Distance(vaultTarget, vaultStart))
                 {
@@ -487,7 +482,6 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case MovementState.Slide:
-                //Debug.Log("sliding");
                 transform.position += (vaultTarget - vaultStart) * Time.fixedDeltaTime * (0.5f + (velocityHolder.magnitude / 4));
                 if (Vector3.Distance(transform.position, vaultStart) >= Vector3.Distance(vaultTarget, vaultStart))
                 {
@@ -518,9 +512,8 @@ public class PlayerMovement : MonoBehaviour
                         SwitchState(MovementState.Jump);
                     }
                 }
-                //rb.AddForce(transform.forward * new Vector3(runIntoWallVelocity.x, 0, runIntoWallVelocity.z).magnitude * Time.deltaTime);
-                Debug.Log("Wall Run");
-                rb.AddForce(new Vector3(runIntoWallVelocity.x, 0, runIntoWallVelocity.z) * MovementSpeedInAir * Time.fixedDeltaTime);
+                rb.AddForce(transform.forward * new Vector3(runIntoWallVelocity.x, 0, runIntoWallVelocity.z).magnitude * Time.fixedDeltaTime);
+                //rb.AddForce(new Vector3(runIntoWallVelocity.x, 0, runIntoWallVelocity.z) * MovementSpeedInAir * Time.fixedDeltaTime);
                 rb.AddForce(transform.up * 4 * Time.fixedDeltaTime);
 
                 /*rb.AddForce(transform.forward * MovementSpeed * Time.deltaTime);
@@ -530,7 +523,6 @@ public class PlayerMovement : MonoBehaviour
                     rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized * MaxSpeed + new Vector3(0, rb.velocity.y, 0);
                 }
                 rb.AddForce(-transform.up * FallingSpeedOnWall * Time.deltaTime);*/
-                //Debug.Log(rb.velocity.y);
                 break;
             case MovementState.WallClimb:
                 collidedObjects = Physics.OverlapSphere(rangeCollider.transform.position, rangeCollider.radius);
@@ -608,12 +600,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        Debug.Log("Normal Jump");
         rb.AddForce(transform.up * JumpHeight * Time.fixedDeltaTime, ForceMode.Impulse);
-        myAudioSource.clip = JumpSound;
+        /*myAudioSource.clip = JumpSound;
         myAudioSource.loop = false;
         myAudioSource.pitch = UnityEngine.Random.Range(1 - pitchShift, 1 + pitchShift);
-        myAudioSource.Play();
+        myAudioSource.Play();*/
         isGrounded = false;
         SwitchState(MovementState.Jump);
     }

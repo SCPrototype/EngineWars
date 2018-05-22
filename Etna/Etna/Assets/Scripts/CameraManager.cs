@@ -20,6 +20,9 @@ public class CameraManager : MonoBehaviour {
     //Keeps track of the mouse X movement since the start of the game.
     float rotationX = 0;
     float rotationY = 0;
+    float rotationZ = 0;
+    float targetRotationZ;
+    float targetRotationY;
     Quaternion cameraStartRotation;
     Quaternion startRotation;
     bool shouldAlignToObject = false;
@@ -59,15 +62,17 @@ public class CameraManager : MonoBehaviour {
 
     public void TurnAround()
     {
-        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y -180, transform.localEulerAngles.z);
+        //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y -180, transform.localEulerAngles.z);
 
         //Dont touch the 3 lines below here, they wont help you.
         startRotation = transform.localRotation;
         rotationX = 0;
         rotationY = 0;
+        rotationZ = 0;
+        targetRotationY = 180;
     }
 
-    public void Rotate(float amount, Rigidbody rb)
+    public void Rotate(float amount, Rigidbody rb, Vector3 normal)
     {
         ShouldObjectRotateX = false;
         ShouldObjectRotateY = false;
@@ -80,7 +85,8 @@ public class CameraManager : MonoBehaviour {
         shouldAlignToObject = true;
 
         //The desired rotation
-        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, amount);
+        transform.LookAt(transform.position + new Vector3(-normal.z, 0, normal.x));
+        //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, amount);
 
         rb.constraints = RigidbodyConstraints.FreezeRotation;
 
@@ -88,6 +94,8 @@ public class CameraManager : MonoBehaviour {
         startRotation = transform.localRotation;
         rotationX = 0;
         rotationY = 0;
+        rotationZ = 0;
+        targetRotationZ = amount;
 
         shouldResetRotation = true;
     }
@@ -108,6 +116,9 @@ public class CameraManager : MonoBehaviour {
         {
             transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
             startRotation = transform.localRotation;
+            rotationZ = 0;
+            targetRotationZ = 0;
+            targetRotationY = 0;
             shouldResetRotation = false;
         }
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
@@ -116,6 +127,32 @@ public class CameraManager : MonoBehaviour {
     private void HandleRotation()
     {
         //rotationX keeps track of the mouse X movement since the start of the game.
+        if (targetRotationZ != 0) {
+            if (Mathf.Abs(rotationZ) < Mathf.Abs(targetRotationZ))
+            {
+                rotationZ += targetRotationZ * Time.deltaTime / 0.15f;
+            } else
+            {
+                startRotation = transform.localRotation;
+                rotationZ = 0;
+                targetRotationZ = 0;
+            }
+        }
+        if (targetRotationY != 0)
+        {
+            if (Mathf.Abs(rotationX) < Mathf.Abs(targetRotationY))
+            {
+                rotationX += targetRotationY * Time.deltaTime / 0.15f;
+            }
+            else
+            {
+                startRotation = transform.localRotation;
+                rotationX = 0;
+                targetRotationY = 0;
+                Debug.Log(ShouldObjectRotateX);
+                Debug.Log(ShouldObjectRotateY);
+            }
+        }
         rotationX += Input.GetAxis("Mouse X") * XSensitivity;
         rotationY += Input.GetAxis("Mouse Y") * YSensitivity;
 
@@ -130,6 +167,7 @@ public class CameraManager : MonoBehaviour {
         //Translate rotations to quaternions.
         Quaternion xQuaternion = Quaternion.AngleAxis(rotationX, Vector3.up);
         Quaternion yQuaternion = Quaternion.AngleAxis(rotationY, -Vector3.right);
+        Quaternion zQuaternion = Quaternion.AngleAxis(rotationZ, Vector3.forward);
 
         Quaternion allRotations = Quaternion.Euler(xQuaternion.eulerAngles + yQuaternion.eulerAngles);
 
@@ -146,10 +184,15 @@ public class CameraManager : MonoBehaviour {
         {
             transform.localRotation = startRotation * yQuaternion;
         }
+        if (targetRotationZ != 0)
+        {
+            transform.localRotation = startRotation * zQuaternion;
+        }
         if (ShouldCameraRotateX && ShouldCameraRotateY)
         {
             if (shouldAlignToObject)
             {
+                allRotations = Quaternion.Euler(xQuaternion.eulerAngles + yQuaternion.eulerAngles + zQuaternion.eulerAngles);
                 myCamera.transform.rotation = startRotation * allRotations;
             }
             else

@@ -28,6 +28,7 @@ public class Room : MonoBehaviour {
         roof = GameObject.Instantiate(pRoof, room).transform;
         room.position = new Vector3((gridPosition.x - LevelGenerator.roomGridSize / 2) * 50, 0, (gridPosition.y - LevelGenerator.roomGridSize / 2) * 50);
         roof.position = new Vector3((gridPosition.x - LevelGenerator.roomGridSize / 2) * 50, 50, (gridPosition.y - LevelGenerator.roomGridSize / 2) * 50);
+        room.transform.eulerAngles = new Vector3(0, 90 * Random.Range(0, 4), 0);
         doorDirections = pDoorDirections;
         roomType = int.Parse(pRoom.name.Remove(0,5));
 
@@ -43,20 +44,22 @@ public class Room : MonoBehaviour {
             }
             if (i == 0)
             {
-                walls[i].position = room.position + new Vector3(0, 25, 24.5f);
+                walls[i].position = room.position + new Vector3(0, 25, 25f);
+                walls[i].eulerAngles = new Vector3(0, 180, 0);
             }
             else if (i == 1)
             {
-                walls[i].position = room.position + new Vector3(24.5f, 25, 0);
-                walls[i].eulerAngles = new Vector3(0, 90, 0);
+                walls[i].position = room.position + new Vector3(25f, 25, 0);
+                walls[i].eulerAngles = new Vector3(0, 270, 0);
             }
             else if (i == 2)
             {
-                walls[i].position = room.position + new Vector3(0, 25, -24.5f);
+                walls[i].position = room.position + new Vector3(0, 25, -25f);
+                walls[i].eulerAngles = new Vector3(0, 0, 0);
             }
             else if (i == 3)
             {
-                walls[i].position = room.position + new Vector3(-24.5f, 25, 0);
+                walls[i].position = room.position + new Vector3(-25f, 25, 0);
                 walls[i].eulerAngles = new Vector3(0, 90, 0);
             }
         }

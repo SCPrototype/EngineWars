@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Resources : MonoBehaviour
 {
+    private const int energyRequired = 10;
+    private const int maxEnergy = 100;
     private float amountOfEnergyStored = 0;
     public float amountOfTimeLightDecay;
     private float timeLeft = 0;
@@ -45,9 +47,9 @@ public class Resources : MonoBehaviour
     public void AddEnergy(float amount)
     {
         amountOfEnergyStored += amount;
-        if (amountOfEnergyStored > 100)
+        if (amountOfEnergyStored > maxEnergy)
         {
-            amountOfEnergyStored = 100;
+            amountOfEnergyStored = maxEnergy;
         }
     }
 
@@ -58,9 +60,9 @@ public class Resources : MonoBehaviour
 
     public bool CanActivateLight()
     {
-        if (amountOfEnergyStored >= 20)
+        if (amountOfEnergyStored >= energyRequired)
         {
-            amountOfEnergyStored -= 20;
+            amountOfEnergyStored -= energyRequired;
             return true;
         }
         else
