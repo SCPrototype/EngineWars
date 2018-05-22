@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23487711986810292}
   - component: {fileID: 114334267184860054}
   - component: {fileID: 108434184708846844}
+  - component: {fileID: 114737130805601604}
   m_Layer: 0
   m_Name: TorchLight
   m_TagString: Untagged
@@ -38,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1574323800117004}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.98, y: 4.03, z: 5.121045}
+  m_LocalPosition: {x: -22.3069, y: 1.92, z: -12.846571}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -133,9 +134,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Torchlight: {fileID: 108434184708846844}
-  maxLightIntensity: 20
+  maxLightIntensity: 5
   maxLightRange: 0
   TimeTillExtinguish: 20
+--- !u!114 &114737130805601604
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1574323800117004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e16376e14fc964981a58143611e567, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactKey: 101
+  activationLight: {fileID: 114334267184860054}
 --- !u!136 &136373645565323898
 CapsuleCollider:
   m_ObjectHideFlags: 1
