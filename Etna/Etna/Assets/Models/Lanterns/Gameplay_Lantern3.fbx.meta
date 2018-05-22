@@ -1,5 +1,7 @@
 fileFormatVersion: 2
-guid: f46c0be31ac17b64b98ad0359b26d43d
+guid: 545c915c4db1c5a479b3a34c4d4524a0
+timeCreated: 1526907472
+licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -63,6 +65,7 @@ ModelImporter:
     2300000: pSphere13
     3300000: pSphere13
     4300000: pSphere13
+    9500000: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -82,7 +85,6 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -94,7 +96,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 5
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
@@ -138,7 +140,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

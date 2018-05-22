@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 public class GameMenu_Handler : MonoBehaviour
 {
     public GameObject PauseMenu;
+    public GameObject blackPanel;
     public static bool Paused = false;
+    private const float timeToGameOverScreen = 2;
+    private float gameOverScreenRequestTime;
 
     // Use this for initialization
     void Start()
@@ -18,9 +21,24 @@ public class GameMenu_Handler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !GameManager.GameOver)
         {
             TogglePauseMenu(!PauseMenu.activeSelf);
+        }
+        if (GameManager.GameOver && !blackPanel.activeSelf)
+        {
+            FadeToBlack(true);
+            gameOverScreenRequestTime = Time.time;
+        }
+        else if (!GameManager.GameOver && blackPanel.activeSelf)
+        {
+            FadeToBlack(false);
+            gameOverScreenRequestTime = 0;
+        }
+
+        if (Time.time - gameOverScreenRequestTime >= GameManager.BlackOutTime && GameManager.GameOver)
+        {
+            SceneManager.LoadScene("GameOverMenu");
         }
     }
 
@@ -30,7 +48,17 @@ public class GameMenu_Handler : MonoBehaviour
         Paused = toggle;
     }
 
+    public void FadeToBlack(bool toggle)
+    {
+        blackPanel.SetActive(toggle);
+    }
+
     public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void StartRealLevel()
     {
         SceneManager.LoadScene("LevelOne");
     }

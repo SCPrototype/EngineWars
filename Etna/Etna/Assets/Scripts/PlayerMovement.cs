@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(AudioSource))]
 public class PlayerMovement : MonoBehaviour
@@ -17,7 +15,6 @@ public class PlayerMovement : MonoBehaviour
     private GameObject currentWall;
     private GameObject prevWall;
     public float FallingSpeedOnWall;
-    public Text InteractText;
 
     private Rigidbody rb;
     private const float groundDrag = 8f;
@@ -34,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 vaultStart;
     private Vector3 vaultTarget;
 
-    private Vector3 runIntoWallVelocity;
+    private Vector3 runIntoWallVelocity;		
     private Vector3 playerMovementOnWall;
     public float JumpFromWallStrength;
     private bool isCameraTilted = false;
@@ -53,12 +50,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private enum WallSide
-    {
-        Left,
-        Right,
+	{
+	    Left,
+	    Right,
         Front,
-        None
-    }
+	    None
+	}
 
     private MovementState myMovementState = MovementState.Idle;
     private WallSide myWallSide;
@@ -68,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip LandingSound;
     public AudioClip SlideSound;
     public AudioClip RunSound;
-    private const float pitchShift = 0.15f;
+    private const float pitchShift = 0.05f;
     private const float idleThreshold = 0.1f;
     private const float groundedCheckDist = 0.2f;
 
@@ -85,11 +82,10 @@ public class PlayerMovement : MonoBehaviour
         {
             camManager = GetComponent<CameraManager>();
         }
-       
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!GameMenu_Handler.Paused)
         {
@@ -101,7 +97,6 @@ public class PlayerMovement : MonoBehaviour
             HandleGrounded();
             HandleState();
             HandleCamera();
-            HandleInteractible();
         }
         else if (!rb.isKinematic)
         {
@@ -111,45 +106,48 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleGrounded()
     {
-        RaycastHit[] hit = new RaycastHit[5];
-        Debug.DrawRay(transform.position, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
-        Debug.DrawRay(transform.position + (transform.forward + transform.right) * 0.4f, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
-        Debug.DrawRay(transform.position + (-transform.forward + transform.right) * 0.4f, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
-        Debug.DrawRay(transform.position + (-transform.forward - transform.right) * 0.4f, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
-        Debug.DrawRay(transform.position + (transform.forward - transform.right) * 0.4f, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
-        if (Physics.Raycast(transform.position, new Vector3(0, -1, 0), out hit[0], transform.lossyScale.y + groundedCheckDist) ||
-            Physics.Raycast(transform.position + (transform.forward + transform.right) * 0.4f, new Vector3(0, -1, 0), out hit[1], transform.lossyScale.y + groundedCheckDist) ||
-            Physics.Raycast(transform.position + (-transform.forward + transform.right) * 0.4f, new Vector3(0, -1, 0), out hit[2], transform.lossyScale.y + groundedCheckDist) ||
-            Physics.Raycast(transform.position + (-transform.forward - transform.right) * 0.4f, new Vector3(0, -1, 0), out hit[3], transform.lossyScale.y + groundedCheckDist) ||
-            Physics.Raycast(transform.position + (transform.forward - transform.right) * 0.4f, new Vector3(0, -1, 0), out hit[4], transform.lossyScale.y + groundedCheckDist))
+        if (myMovementState != MovementState.Jump)
         {
-            for (int i = 0; i < hit.Length; i++)
+            RaycastHit[] hit = new RaycastHit[5];
+            Debug.DrawRay(transform.position, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
+            Debug.DrawRay(transform.position + (transform.forward + transform.right) * 0.4f, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
+            Debug.DrawRay(transform.position + (-transform.forward + transform.right) * 0.4f, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
+            Debug.DrawRay(transform.position + (-transform.forward - transform.right) * 0.4f, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
+            Debug.DrawRay(transform.position + (transform.forward - transform.right) * 0.4f, new Vector3(0, -transform.lossyScale.y - groundedCheckDist, 0), Color.red, 5);
+            if (Physics.Raycast(transform.position, new Vector3(0, -1, 0), out hit[0], transform.lossyScale.y + groundedCheckDist) ||
+                Physics.Raycast(transform.position + (transform.forward + transform.right) * 0.4f, new Vector3(0, -1, 0), out hit[1], transform.lossyScale.y + groundedCheckDist) ||
+                Physics.Raycast(transform.position + (-transform.forward + transform.right) * 0.4f, new Vector3(0, -1, 0), out hit[2], transform.lossyScale.y + groundedCheckDist) ||
+                Physics.Raycast(transform.position + (-transform.forward - transform.right) * 0.4f, new Vector3(0, -1, 0), out hit[3], transform.lossyScale.y + groundedCheckDist) ||
+                Physics.Raycast(transform.position + (transform.forward - transform.right) * 0.4f, new Vector3(0, -1, 0), out hit[4], transform.lossyScale.y + groundedCheckDist))
             {
-                if (hit[i].transform != null)
+                for (int i = 0; i < hit.Length; i++)
                 {
-                    if (hit[i].transform.tag == "Ground")
+                    if (hit[i].transform != null)
                     {
-                        if (!isGrounded)
+                        if (hit[i].transform.tag == "Ground")
                         {
-                            isGrounded = true;
-                            myAudioSource.clip = LandingSound;
-                            myAudioSource.loop = false;
-                            myAudioSource.pitch = UnityEngine.Random.Range(1 - pitchShift, 1 + pitchShift);
-                            myAudioSource.Play();
-                            prevWall = null;
+                            if (!isGrounded)
+                            {
+                                isGrounded = true;
+                                myAudioSource.clip = LandingSound;
+                                myAudioSource.loop = false;
+                                myAudioSource.pitch = UnityEngine.Random.Range(1 - pitchShift, 1 + pitchShift);
+                                myAudioSource.Play();
+                                prevWall = null;
+                            }
+                            isOnWall = false;
+                            rb.useGravity = true;
+                            if (myMovementState == MovementState.WallRun || myMovementState == MovementState.WallClimb)
+                            {
+                                SwitchState(MovementState.Run);
+                            }
+                            if (isCameraTilted == true)
+                            {
+                                camManager.ResetRotation(rb);
+                                isCameraTilted = false;
+                            }
+                            return;
                         }
-                        isOnWall = false;
-                        rb.useGravity = true;
-                        if (myMovementState == MovementState.WallRun || myMovementState == MovementState.WallClimb)
-                        {
-                            SwitchState(MovementState.Run);
-                        }
-                        if (isCameraTilted == true)
-                        {
-                            camManager.ResetRotation(rb);
-                            isCameraTilted = false;
-                        }
-                        return;
                     }
                 }
             }
@@ -180,12 +178,12 @@ public class PlayerMovement : MonoBehaviour
                             if (Vector2.Angle(new Vector2(transform.right.x, transform.right.z), new Vector2(hit.normal.x, hit.normal.z)) >= 90)
                             {
                                 myWallSide = WallSide.Right;
-                                camManager.Rotate(20, rb);
+                                camManager.Rotate(20, rb, -hit.normal);
                             }
                             else
                             {
                                 myWallSide = WallSide.Left;
-                                camManager.Rotate(-20, rb);
+                                camManager.Rotate(-20, rb, hit.normal);
                             }
                             isCameraTilted = true;
                         }
@@ -214,62 +212,55 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 if (myWallSide == WallSide.Right)
                 {
-                    Debug.Log("Jumping to the left");
-                    rb.AddForce(new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * JumpFromWallStrength);
-                    //rb.AddForce(-transform.right * JumpFromWallStrength / 2);
-                    rb.AddForce(transform.up * JumpFromWallStrength * 1.5f);
+                    //rb.AddForce(new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * JumpFromWallStrength * Time.fixedDeltaTime);
+                    if (Input.GetKey(KeyCode.A))
+                    {
+                        rb.AddForce(-transform.right * JumpFromWallStrength * Time.fixedDeltaTime);
+                    }
+                    rb.AddForce(transform.up * JumpFromWallStrength * Time.fixedDeltaTime);
                     camManager.ResetRotation(rb);
                 }
                 else if (myWallSide == WallSide.Left)
                 {
-                    Debug.Log("Jumping to the right");
-                    rb.AddForce(new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * JumpFromWallStrength);
-                    // rb.AddForce(transform.right * JumpFromWallStrength / 2);
-                    rb.AddForce(transform.up * JumpFromWallStrength * 1.5f);
+                    //rb.AddForce(new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * JumpFromWallStrength * Time.fixedDeltaTime);
+                    if (Input.GetKey(KeyCode.D))
+                    {
+                        rb.AddForce(transform.right * JumpFromWallStrength * Time.fixedDeltaTime);
+                    }
+                    rb.AddForce(transform.up * JumpFromWallStrength * Time.fixedDeltaTime);
                     camManager.ResetRotation(rb);
                 }
                 else if (myWallSide == WallSide.Front)
                 {
-                    Debug.Log("Jumping backwards");
                     RaycastHit hit;
                     Debug.DrawRay(new Vector3(transform.position.x, currentWall.transform.position.y, transform.position.z), new Vector3(currentWall.transform.position.x, transform.position.y, currentWall.transform.position.z) - transform.position, Color.green, 15);
                     if (Physics.Raycast(new Vector3(transform.position.x, currentWall.transform.position.y, transform.position.z), new Vector3(currentWall.transform.position.x, transform.position.y, currentWall.transform.position.z) - transform.position, out hit, 4))
                     {
-                        Debug.Log(hit.transform.name);
                         if (hit.transform.gameObject == currentWall)
                         {
-                            rb.AddForce(hit.normal * JumpFromWallStrength);
+                            rb.AddForce(hit.normal * JumpFromWallStrength * Time.fixedDeltaTime);
                         } else
                         {
-                            rb.AddForce(-transform.forward * JumpFromWallStrength);
+                            rb.AddForce(-transform.forward * JumpFromWallStrength * Time.fixedDeltaTime);
                         }
                     } else
                     {
-                        rb.AddForce(-transform.forward * JumpFromWallStrength);
+                        rb.AddForce(-transform.forward * JumpFromWallStrength * Time.fixedDeltaTime);
                     }
                     // rb.AddForce(transform.right * JumpFromWallStrength / 2);
-                    rb.AddForce(transform.up * JumpFromWallStrength * 1.5f);
+                    rb.AddForce(transform.up * JumpFromWallStrength * 1.5f * Time.fixedDeltaTime);
                     camManager.ResetRotation(rb);
-                    camManager.TurnAround();
+                    //SWITCH: Turn camera around on wall jump
+                    //camManager.TurnAround();
                 }
                 prevWall = currentWall;
                 currentWall = null;
                 isOnWall = false;
                 SwitchState(MovementState.WallJump);
                 myWallSide = WallSide.None;
-                //Debug.Log("Wall is :" + myWallSide.ToString());
             }
         }
-        /*if (isOnWall)
-        {
-            rb.useGravity = false;
-            isGrounded = true;
-        }
-        else
-        {
-            rb.useGravity = true;
-        }*/
-        if (isGrounded)
+        else if (isGrounded)
         {
             if (myMovementState != MovementState.Vault && myMovementState != MovementState.Slide)
             {
@@ -277,21 +268,21 @@ public class PlayerMovement : MonoBehaviour
                 if (Input.GetKey(KeyCode.W))
                 {
                     //rb.velocity += transform.forward * MovementSpeed * Time.deltaTime;
-                    rb.AddForce(transform.forward * MovementSpeed * Time.deltaTime);
+                    rb.AddForce(transform.forward * MovementSpeed * Time.fixedDeltaTime);
                 }
                 if (Input.GetKey(KeyCode.A))
                 {
-                    rb.AddForce(-transform.right * MovementSpeed * Time.deltaTime);
+                    rb.AddForce(-transform.right * MovementSpeed * Time.fixedDeltaTime);
                     //rb.velocity += -transform.right * MovementSpeed * Time.deltaTime;
                 }
                 if (Input.GetKey(KeyCode.S))
                 {
-                    rb.AddForce(-transform.forward * MovementSpeed * Time.deltaTime);
+                    rb.AddForce(-transform.forward * MovementSpeed * Time.fixedDeltaTime);
                     //rb.velocity += -transform.forward * MovementSpeed * Time.deltaTime;
                 }
                 if (Input.GetKey(KeyCode.D))
                 {
-                    rb.AddForce(transform.right * MovementSpeed * Time.deltaTime);
+                    rb.AddForce(transform.right * MovementSpeed * Time.fixedDeltaTime);
                     //rb.velocity += transform.right * MovementSpeed * Time.deltaTime;
                 }
                 if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude >= MaxSpeed)
@@ -300,19 +291,15 @@ public class PlayerMovement : MonoBehaviour
                 }
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    activateInteractable(KeyCode.Space);
-                    if ((myMovementState == MovementState.Idle || myMovementState == MovementState.Run) && isGrounded)
+                    checkInteractable(KeyCode.Space);
+                    if ((myMovementState == MovementState.Idle|| myMovementState == MovementState.Run) && isGrounded)
                     {
                         Jump();
                     }
                 }
                 if (Input.GetKeyDown(KeyCode.LeftShift))
                 {
-                    activateInteractable(KeyCode.LeftShift);
-                }
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    activateInteractable(KeyCode.E);
+                    checkInteractable(KeyCode.LeftShift);
                 }
             }
         }
@@ -322,21 +309,21 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
                 //rb.velocity += transform.forward * MovementSpeed * Time.deltaTime * 0.003f;
-                rb.AddForce(transform.forward * MovementSpeedInAir * Time.deltaTime);
+                rb.AddForce(transform.forward * MovementSpeedInAir * Time.fixedDeltaTime);
             }
             if (Input.GetKey(KeyCode.A))
             {
-                rb.AddForce(-transform.right * MovementSpeedInAir * Time.deltaTime);
+                rb.AddForce(-transform.right * MovementSpeedInAir * Time.fixedDeltaTime);
                 //rb.velocity += -transform.right * MovementSpeed * Time.deltaTime * 0.003f;
             }
             if (Input.GetKey(KeyCode.S))
             {
-                rb.AddForce(-transform.forward * MovementSpeedInAir * Time.deltaTime);
+                rb.AddForce(-transform.forward * MovementSpeedInAir * Time.fixedDeltaTime);
                 //rb.velocity += -transform.forward * MovementSpeed * Time.deltaTime * 0.003f;
             }
             if (Input.GetKey(KeyCode.D))
             {
-                rb.AddForce(transform.right * MovementSpeedInAir * Time.deltaTime);
+                rb.AddForce(transform.right * MovementSpeedInAir * Time.fixedDeltaTime);
                 //rb.velocity += transform.right * MovementSpeed * Time.deltaTime * 0.003f;
             }
             if (new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude >= MaxSpeed)
@@ -361,56 +348,33 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void HandleInteractible()
-    {
-        bool text1 = false;
-        bool text2 = false;
-        bool text3 = false;
-        if (checkInteractable(KeyCode.E) == true)
-        { InteractText.text = "Press E to interact."; text1 = true; }
-        if (checkInteractable(KeyCode.Space) == true)
-        { InteractText.text = "Press Space to interact."; text2 = true; }
-        if (checkInteractable(KeyCode.LeftShift) == true)
-        { InteractText.text = "Press Shift to interact."; text3 = true; }
-        if (text1 == false && text2 == false && text3 == false)
-        { InteractText.text = ""; }
-    }
-
     private void SwitchState(MovementState state)
     {
-        Debug.Log("Switching state from :" + myMovementState + ": to :" + state + ":");
+        //Debug.Log("Switching state from :" + myMovementState + ": to :" + state + ":");
         switch (state)
         {
             case MovementState.Idle:
-                //Debug.Log("idling");
                 myMovementState = MovementState.Idle;
                 break;
             case MovementState.Run:
-                //Debug.Log("running");
                 myMovementState = MovementState.Run;
                 break;
             case MovementState.Jump:
-                //Debug.Log("jumping");
                 myMovementState = MovementState.Jump;
                 break;
             case MovementState.Fall:
-                //Debug.Log("falling");
                 myMovementState = MovementState.Fall;
                 break;
             case MovementState.Vault:
-                //Debug.Log("vaulting");
                 myMovementState = MovementState.Vault;
                 break;
             case MovementState.Slide:
-                //Debug.Log("sliding");
                 myMovementState = MovementState.Slide;
                 break;
             case MovementState.WallRun:
-                //Debug.Log("wall running");
                 myMovementState = MovementState.WallRun;
                 break;
             case MovementState.WallClimb:
-                //Debug.Log("wall climbing");
                 if (myMovementState != MovementState.WallClimb && myMovementState != MovementState.Fall && myMovementState != MovementState.WallJump)
                 {
                     rb.velocity = new Vector3(0, runIntoWallVelocity.magnitude, 0);
@@ -418,7 +382,6 @@ public class PlayerMovement : MonoBehaviour
                 myMovementState = MovementState.WallClimb;
                 break;
             case MovementState.WallJump:
-                //Debug.Log("Wall jumping");
                 myAudioSource.clip = JumpSound;
                 myAudioSource.loop = false;
                 myAudioSource.pitch = UnityEngine.Random.Range(1 - pitchShift, 1 + pitchShift);
@@ -461,7 +424,6 @@ public class PlayerMovement : MonoBehaviour
                 {
                     SwitchState(MovementState.Fall);
                 }
-                //cameraBob();
                 break;
             case MovementState.Jump:
                 CheckForWall();
@@ -482,7 +444,10 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case MovementState.Fall:
-                CheckForWall();
+                if (rb.velocity.y >= -0.5f)
+                {
+                    CheckForWall();
+                }
                 if (isGrounded)
                 {
                     if (new Vector2(rb.velocity.x, rb.velocity.z).magnitude > idleThreshold)
@@ -500,8 +465,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case MovementState.Vault:
-                //Debug.Log("vaulting");
-                transform.position += (vaultTarget - vaultStart) * Time.deltaTime * (0.5f + (velocityHolder.magnitude / 4));
+                transform.position += (vaultTarget - vaultStart) * Time.fixedDeltaTime * (0.5f + (velocityHolder.magnitude / 4));
                 if (Vector3.Distance(transform.position, vaultStart) >= Vector3.Distance(vaultTarget, vaultStart))
                 {
                     rb.isKinematic = false;
@@ -518,8 +482,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case MovementState.Slide:
-                //Debug.Log("sliding");
-                transform.position += (vaultTarget - vaultStart) * Time.deltaTime * (0.5f + (velocityHolder.magnitude / 4));
+                transform.position += (vaultTarget - vaultStart) * Time.fixedDeltaTime * (0.5f + (velocityHolder.magnitude / 4));
                 if (Vector3.Distance(transform.position, vaultStart) >= Vector3.Distance(vaultTarget, vaultStart))
                 {
                     rb.isKinematic = false;
@@ -543,15 +506,15 @@ public class PlayerMovement : MonoBehaviour
                     {
                         break;
                     }
-                    if (i == collidedObjects.Length - 1)
+                    if (i == collidedObjects.Length -1)
                     {
                         camManager.ResetRotation(rb);
                         SwitchState(MovementState.Jump);
                     }
                 }
-                //rb.AddForce(transform.forward * new Vector3(runIntoWallVelocity.x, 0, runIntoWallVelocity.z).magnitude * Time.deltaTime);
-                rb.AddForce(new Vector3(runIntoWallVelocity.x, 0, runIntoWallVelocity.z) * MovementSpeedInAir * Time.deltaTime);
-                rb.AddForce(transform.up * 4);
+                rb.AddForce(transform.forward * new Vector3(runIntoWallVelocity.x, 0, runIntoWallVelocity.z).magnitude * Time.fixedDeltaTime);
+                //rb.AddForce(new Vector3(runIntoWallVelocity.x, 0, runIntoWallVelocity.z) * MovementSpeedInAir * Time.fixedDeltaTime);
+                rb.AddForce(transform.up * 4 * Time.fixedDeltaTime);
 
                 /*rb.AddForce(transform.forward * MovementSpeed * Time.deltaTime);
  
@@ -560,7 +523,6 @@ public class PlayerMovement : MonoBehaviour
                     rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized * MaxSpeed + new Vector3(0, rb.velocity.y, 0);
                 }
                 rb.AddForce(-transform.up * FallingSpeedOnWall * Time.deltaTime);*/
-                //Debug.Log(rb.velocity.y);
                 break;
             case MovementState.WallClimb:
                 collidedObjects = Physics.OverlapSphere(rangeCollider.transform.position, rangeCollider.radius);
@@ -590,23 +552,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private bool checkInteractable(KeyCode key)
-    {
-        Collider[] allOverlappingColliders = Physics.OverlapBox(interactCollider.bounds.center, interactCollider.bounds.extents);
-
-        foreach (Collider collidedObject in allOverlappingColliders)
-        {
-            if (collidedObject.GetComponent<Interactable>() != null)
-            {
-                if (collidedObject.GetComponent<Interactable>().GetInteractKey() == key)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private bool activateInteractable(KeyCode key)
     {
         Collider[] allOverlappingColliders = Physics.OverlapBox(interactCollider.bounds.center, interactCollider.bounds.extents);
 
@@ -655,16 +600,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        rb.AddForce(transform.up * JumpHeight, ForceMode.Impulse);
-        myAudioSource.clip = JumpSound;
+        rb.AddForce(transform.up * JumpHeight * Time.fixedDeltaTime, ForceMode.Impulse);
+        /*myAudioSource.clip = JumpSound;
         myAudioSource.loop = false;
         myAudioSource.pitch = UnityEngine.Random.Range(1 - pitchShift, 1 + pitchShift);
-        myAudioSource.Play();
+        myAudioSource.Play();*/
+        isGrounded = false;
         SwitchState(MovementState.Jump);
     }
 
     public MovementState GetMovementState()
-    {
-        return myMovementState;
-    }
+	{		
+	    return myMovementState;		
+	}
 }

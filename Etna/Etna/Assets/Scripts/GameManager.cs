@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
+    public static bool GameOver = false;
+
     public GameObject DarknessPrefab;
     private float darknessSpeed;
     public float BaseDarknessSpeed;
@@ -12,14 +14,17 @@ public class GameManager : MonoBehaviour {
     public float DarknessSpeedDecrease;
     private List<Vector3> darknessPath = new List<Vector3>();
     private GameObject darkness;
+    private float timeSinceBlackOut;
+    public const float BlackOutTime = 3.5f;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         darkness = GameObject.Instantiate(DarknessPrefab, transform);
         darkness.SetActive(false);
         darkness.GetComponent<Darkness>().SetGameManager(this);
         darknessSpeed = BaseDarknessSpeed;
-
+        DarknessEffects temp = Camera.main.GetComponent<DarknessEffects>();
+        temp.SetTarget(darkness);
     }
 	
 	// Update is called once per frame
@@ -31,6 +36,10 @@ public class GameManager : MonoBehaviour {
                 moveDarknessAlongPath();
             }
             darknessSpeed += DarknessSpeedIncrease * Time.deltaTime;
+        }
+        if (GameOver)
+        {
+            AudioListener.volume = 1 - ((Time.time - timeSinceBlackOut) / BlackOutTime);
         }
     }
 
@@ -59,6 +68,7 @@ public class GameManager : MonoBehaviour {
 
     public void SlowDownDarkness()
     {
+        Debug.Log("DARKNESS IS SLOWED DOWN BY A LIGHT!");
         darknessSpeed -= DarknessSpeedDecrease;
         if (darknessSpeed < BaseDarknessSpeed)
         {
@@ -66,8 +76,10 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void GameOver()
+    public void SetGameOver()
     {
-        SceneManager.LoadScene("GameOverMenu");
+        GameOver = true;
+        timeSinceBlackOut = Time.time;
+        //SceneManager.LoadScene("GameOverMenu");
     }
 }

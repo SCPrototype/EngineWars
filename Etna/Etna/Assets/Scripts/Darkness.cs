@@ -27,8 +27,7 @@ public class Darkness : MonoBehaviour {
         }
         else if (other.tag == "Player")
         {
-            Debug.Log("GameOver");
-            myGameManager.GameOver();
+            myGameManager.SetGameOver();
         }
     }
 
