@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 95047791395932982}
   - component: {fileID: 108015107597330826}
   - component: {fileID: 114337987586640438}
+  - component: {fileID: 135219776264993642}
   m_Layer: 0
   m_Name: Crystal1
   m_TagString: Untagged
@@ -67,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1907792438062292}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.394, z: 2.69}
+  m_LocalPosition: {x: -3.270331, y: 0.061, z: 7.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4093492993200534}
@@ -114,7 +115,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1723548683363488}
-  m_Mesh: {fileID: 4300000, guid: d8846cba2ed5ee040b10138492c847a4, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 6393880f9d5f48b4883a09aa82f1a47a, type: 3}
 --- !u!95 &95047791395932982
 Animator:
   serializedVersion: 3
@@ -179,8 +180,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1b5ae1e0b0f634286d662e20d1b86d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactKey: 102
+  interactKey: 101
   pickUp: {fileID: 1907792438062292}
+--- !u!135 &135219776264993642
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1907792438062292}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136617422931897280
 CapsuleCollider:
   m_ObjectHideFlags: 1

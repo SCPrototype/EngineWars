@@ -9,7 +9,7 @@ public class Interactable_Vault : Interactable {
     public BoxCollider VaultEnd;
     private Vector2 VaultAngle;
     private float maxAngleDiff = 0.40f;
-    private float speedThreshold = 1f;
+    private float speedThreshold = 2f;
 
     // Use this for initialization
     void Start () {
@@ -23,7 +23,6 @@ public class Interactable_Vault : Interactable {
 
     public override void Interact(PlayerMovement target)
     {
-        Debug.Log(target.GetRigidBody().velocity.magnitude);
         Collider[] allOverlappingColliders = Physics.OverlapBox(VaultStart.bounds.center, VaultStart.bounds.extents, VaultStart.transform.rotation);
 
         foreach (Collider collidedObject in allOverlappingColliders)

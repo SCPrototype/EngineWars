@@ -9,7 +9,7 @@ public class Interactable_Slide : Interactable {
     public BoxCollider SlideEnd;
     private Vector2 SlideAngle;
     private float maxAngleDiff = 0.40f;
-    private float speedThreshold = 1f;
+    private float speedThreshold = 2f;
 
     // Use this for initialization
     void Start () {

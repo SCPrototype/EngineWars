@@ -40,8 +40,9 @@ public class LevelGenerator : MonoBehaviour {
         }
         if (rooms.Count > 1)
         {
-            player.transform.position = rooms[0].GetRoomPosition() + (0.45f * (rooms[0].GetRoomPosition() - rooms[1].GetRoomPosition())) + new Vector3(0, 22.5f, 0);
-            player.transform.LookAt(rooms[1].GetRoomPosition() + new Vector3(0, 22.5f, 0));
+            player.transform.position = rooms[0].GetRoomPosition() + (0.45f * (rooms[0].GetRoomPosition() - rooms[1].GetRoomPosition())) + new Vector3(0, 25f, 0);
+            player.transform.LookAt(rooms[1].GetRoomPosition() + new Vector3(0, 25f, 0));
+            Debug.Log("yeet");
             //player.transform.position = rooms[0].GetRoomPosition();
         }
     }
@@ -52,11 +53,15 @@ public class LevelGenerator : MonoBehaviour {
         {
             AddNewRoom();
         }
-        /*if (Time.time - lastSpawn >= spawnInterval)
+
+        for (int i = rooms.Count-1; i >= 0; i--)
         {
-            AddNewRoom();
-            lastSpawn = Time.time;
-        }*/
+            if (Vector3.Distance(new Vector3(player.transform.position.x, rooms[i].GetRoomPosition().y, player.transform.position.z), rooms[i].GetRoomPosition()) <= 25)
+            {
+                player.GetComponent<Respawn>().SetRespawnPos(rooms[i].GetRoomPosition() + (0.45f * (rooms[i].GetRoomPosition() - rooms[i+1].GetRoomPosition())) + new Vector3(0, 25f, 0));
+                break;
+            }
+        }
     }
 
     public void AddNewRoom()
@@ -65,15 +70,15 @@ public class LevelGenerator : MonoBehaviour {
         {
             Room lastRoom = rooms[rooms.Count - 1];
             int direction = lastRoom.GetRandomDoorDirection();
-            bool[] doors = new bool[] {false,false,false,false};
+            bool[] doors = new bool[] {false,true,false,true};
             int entranceDoor = direction - 2;
             if (entranceDoor < 0)
             {
                 entranceDoor = 4 + entranceDoor;
             }
-            doors[entranceDoor] = true;
+            //doors[entranceDoor] = true;
             Vector2 newRoomPos = new Vector2(Mathf.RoundToInt(lastRoom.GetGridPosition().x + directionToVec2(direction).x), Mathf.RoundToInt(lastRoom.GetGridPosition().y + directionToVec2(direction).y));
-            doors[getRandomDirection(doors, newRoomPos)] = true;
+            //doors[getRandomDirection(doors, newRoomPos)] = true;
 
             int roomDesign = Random.Range(0, RoomDesigns.Length);
             bool roomPlaced = false;
@@ -120,7 +125,7 @@ public class LevelGenerator : MonoBehaviour {
         else
         { 
             Room newRoom = new Room();
-            bool[] doors = new bool[] { true, false, false, false };
+            bool[] doors = new bool[] { false, true, false, false };
             //doors[Random.Range(0, doors.Length)] = true;
             newRoom.InitializeRoom(roomGridSize/2, roomGridSize/2, RoomDesigns[Random.Range(0, RoomDesigns.Length)], doors, SolidWall, DoorWall, Roof);
             roomGrid[roomGridSize/2, roomGridSize/2] = true;

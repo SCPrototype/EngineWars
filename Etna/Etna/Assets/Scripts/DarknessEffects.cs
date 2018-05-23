@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.PostProcessing;
 using UnityEngine.PostProcessing.Utilities;
 
-[RequireComponent(typeof(PostProcessingBehaviour)), RequireComponent(typeof(PostProcessingController))]
+[RequireComponent(typeof(PostProcessingBehaviour)), RequireComponent(typeof(PostProcessingController)), RequireComponent(typeof(AudioSource))]
 public class DarknessEffects : MonoBehaviour {
 
     private const int maxVignetteDistance = 75;
@@ -15,18 +15,22 @@ public class DarknessEffects : MonoBehaviour {
     private const int minCameraShakeDistance = 30;
     private const float maxCameraShake = 0.05f;
 
+    private AudioSource myAudioSource;
     private PostProcessingController myController;
     private GameObject target;
     private Vector3 startPosition;
 
     // Use this for initialization
     void Start () {
+        myAudioSource = GetComponent<AudioSource>();
         myController = GetComponent<PostProcessingController>();
         startPosition = transform.localPosition;
     }
 
     // Update is called once per frame
     void Update () {
+        //Manage the global shader.
+        Shader.SetGlobalVector("_TargetPos", target.transform.position + new Vector3(40, 0, 0));
         if (target != null) {
             if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.transform.position.x, target.transform.position.z)) <= minVignetteDistance)
             {
@@ -44,6 +48,10 @@ public class DarknessEffects : MonoBehaviour {
             {
                 cameraShake(maxCameraShake * (1 - ((Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.transform.position.x, target.transform.position.z)) - minCameraShakeDistance) / (maxCameraShakeDistance - minCameraShakeDistance))));
             }
+        }
+        if (GameManager.GameOver && !myAudioSource.isPlaying)
+        {
+            myAudioSource.Play();
         }
     }
 

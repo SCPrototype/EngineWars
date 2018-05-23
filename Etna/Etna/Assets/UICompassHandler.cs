@@ -14,7 +14,6 @@ public class UICompassHandler : MonoBehaviour
         {
             Debug.Log(doorpost.name + " " + doorpost.position);
         }
-
     }
 
     private List<Transform> GetDoorsInRoom()

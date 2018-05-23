@@ -15,16 +15,17 @@ public class GameManager : MonoBehaviour {
     private List<Vector3> darknessPath = new List<Vector3>();
     private GameObject darkness;
     private float timeSinceBlackOut;
-    public const float BlackOutTime = 3.5f;
+    public const float BlackOutTime = 6f;
 
     // Use this for initialization
     void Start () {
+        GameOver = false;
         darkness = GameObject.Instantiate(DarknessPrefab, transform);
         darkness.SetActive(false);
         darkness.GetComponent<Darkness>().SetGameManager(this);
         darknessSpeed = BaseDarknessSpeed;
-        DarknessEffects temp = Camera.main.GetComponent<DarknessEffects>();
-        temp.SetTarget(darkness);
+        DarknessEffects cameraDarknessEffects = Camera.main.GetComponent<DarknessEffects>();
+        cameraDarknessEffects.SetTarget(darkness);
     }
 	
 	// Update is called once per frame

@@ -20,4 +20,9 @@ public class Respawn : MonoBehaviour {
             transform.position = respawnPos;
         }
 	}
+
+    public void SetRespawnPos(Vector3 newPos)
+    {
+        respawnPos = newPos;
+    }
 }
