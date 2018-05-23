@@ -14,7 +14,13 @@ public class DarknessEffects : MonoBehaviour {
     private const int maxCameraShakeDistance = 40;
     private const int minCameraShakeDistance = 30;
     private const float maxCameraShake = 0.05f;
+    private const int warningDistance = 60;
 
+    private bool shouldWarn = true;
+    private const int warningDelay = 30;
+    private float prevWarning;
+
+    private bool transistionHasPlayed = false;
     private AudioSource myAudioSource;
     private PostProcessingController myController;
     private GameObject target;
@@ -48,10 +54,28 @@ public class DarknessEffects : MonoBehaviour {
             {
                 cameraShake(maxCameraShake * (1 - ((Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.transform.position.x, target.transform.position.z)) - minCameraShakeDistance) / (maxCameraShakeDistance - minCameraShakeDistance))));
             }
+
+            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.transform.position.x, target.transform.position.z)) <= warningDistance)
+            {
+                if (shouldWarn && !GameObject.Find("VoiceLinePlayer").GetComponent<VoiceLinePlayer>().GetIsPlaying() && !GameManager.Consuming)
+                {
+                    if (Time.time - prevWarning >= warningDelay)
+                    {
+                        GameObject.Find("VoiceLinePlayer").GetComponent<VoiceLinePlayer>().PlayVoiceLine(1);
+                        shouldWarn = false;
+                        prevWarning = Time.time;
+                    }
+                }
+            }
+            else
+            {
+                shouldWarn = true;
+            }
         }
-        if (GameManager.GameOver && !myAudioSource.isPlaying)
+        if (GameManager.GameOver && !transistionHasPlayed)
         {
             myAudioSource.Play();
+            transistionHasPlayed = true;
         }
     }
 
@@ -62,7 +86,6 @@ public class DarknessEffects : MonoBehaviour {
 
     private void cameraShake(float intensity)
     {
-       
         transform.localPosition = startPosition + new Vector3(Random.Range(-1, 2) * intensity, Random.Range(-1, 2) * intensity, 0);
     }
 }

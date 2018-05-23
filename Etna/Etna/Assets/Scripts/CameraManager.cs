@@ -53,7 +53,7 @@ public class CameraManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (!GameMenu_Handler.Paused)
+        if (!GameMenu_Handler.Paused && !GameManager.GameOver)
         {
             HandleRotation();
             HandleFOV();

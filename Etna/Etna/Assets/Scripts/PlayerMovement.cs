@@ -89,19 +89,24 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!GameMenu_Handler.Paused)
-        {
-            if (rb.isKinematic && myMovementState != MovementState.Vault && myMovementState != MovementState.Slide)
+        if (!GameManager.GameOver) {
+            if (!GameMenu_Handler.Paused)
             {
-                rb.isKinematic = false;
+                if (rb.isKinematic && myMovementState != MovementState.Vault && myMovementState != MovementState.Slide)
+                {
+                    rb.isKinematic = false;
+                }
+                HandleInput();
+                HandleGrounded();
+                HandleState();
+                HandleCamera();
+                HandleInteractible();
             }
-            HandleInput();
-            HandleGrounded();
-            HandleState();
-            HandleCamera();
-            HandleInteractible();
-        }
-        else if (!rb.isKinematic)
+            else if (!rb.isKinematic)
+            {
+                rb.isKinematic = true;
+            }
+        } else
         {
             rb.isKinematic = true;
         }
