@@ -1868,6 +1868,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1205934150924590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4223320903813142}
+  - component: {fileID: 33204646731862050}
+  - component: {fileID: 23825225786989486}
+  - component: {fileID: 65201734651557524}
+  m_Layer: 0
+  m_Name: Enviroment_BigRock (13)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1207578847358770
 GameObject:
   m_ObjectHideFlags: 1
@@ -11149,6 +11167,19 @@ Transform:
   m_Father: {fileID: 4865691881598396}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 10.925, y: -181.75299, z: -13.739}
+--- !u!4 &4223320903813142
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1205934150924590}
+  m_LocalRotation: {x: -0.0022005453, y: -0, z: -0, w: 0.9999976}
+  m_LocalPosition: {x: 3.72, y: 14.61, z: 24.31}
+  m_LocalScale: {x: 51.171947, y: 200.00012, z: 32.13718}
+  m_Children: []
+  m_Father: {fileID: 4241649013005154}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: -0.252, y: 0, z: 0}
 --- !u!4 &4226040714725366
 Transform:
   m_ObjectHideFlags: 1
@@ -11278,6 +11309,7 @@ Transform:
   m_Children:
   - {fileID: 4781448534255660}
   - {fileID: 4191903549901118}
+  - {fileID: 4223320903813142}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13916,7 +13948,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1281488483863606}
   m_LocalRotation: {x: -0, y: -0.7780391, z: -0, w: 0.6282159}
-  m_LocalPosition: {x: 0.46081376, y: 0.32000065, z: 0.30000114}
+  m_LocalPosition: {x: 0.492, y: 0.32000065, z: 0.155}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 4191903549901118}
@@ -28826,6 +28858,40 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!23 &23825225786989486
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1205934150924590}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: e8f56779a6211af4c883215a6136cf73, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!23 &23825933069166956
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -32240,6 +32306,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1914824216285096}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &33204646731862050
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1205934150924590}
+  m_Mesh: {fileID: 4300000, guid: 61a453816a4b7224f9872f6386dbe3ee, type: 3}
 --- !u!33 &33205519775773492
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -35012,6 +35085,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 600, y: 185.0002, z: 1}
   m_Center: {x: 0, y: 0, z: 499.5}
+--- !u!65 &65201734651557524
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1205934150924590}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.021258343, y: 0.01742221, z: 0.020575311}
+  m_Center: {x: -0.00026109396, y: 0.0028332532, z: 0.00003135577}
 --- !u!65 &65247915635886690
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -36390,7 +36475,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactKey: 101
-  pickUp: {fileID: 0}
 --- !u!114 &114228827942292966
 MonoBehaviour:
   m_ObjectHideFlags: 1
