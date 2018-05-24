@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
     public static bool GameOver = false;
+    public static bool Consuming = false;
 
     public GameObject DarknessPrefab;
     private float darknessSpeed;
@@ -15,31 +16,37 @@ public class GameManager : MonoBehaviour {
     private List<Vector3> darknessPath = new List<Vector3>();
     private GameObject darkness;
     private float timeSinceBlackOut;
-    public const float BlackOutTime = 3.5f;
+    public const float BlackOutTime = 6f;
 
     // Use this for initialization
     void Start () {
+        AudioListener.volume = 1;
+        GameOver = false;
+        Consuming = false;
         darkness = GameObject.Instantiate(DarknessPrefab, transform);
         darkness.SetActive(false);
         darkness.GetComponent<Darkness>().SetGameManager(this);
         darknessSpeed = BaseDarknessSpeed;
-        DarknessEffects temp = Camera.main.GetComponent<DarknessEffects>();
-        temp.SetTarget(darkness);
+        DarknessEffects cameraDarknessEffects = Camera.main.GetComponent<DarknessEffects>();
+        cameraDarknessEffects.SetTarget(darkness);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Respawn>().SetDarknessCollider(darkness.GetComponent<BoxCollider>());
+
+        GameObject.Find("VoiceLinePlayer").GetComponent<VoiceLinePlayer>().PlayVoiceLine(0);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (!GameMenu_Handler.Paused)
+        if (GameOver)
+        {
+            AudioListener.volume = 1 - ((Time.time - timeSinceBlackOut) / BlackOutTime);
+        }
+        else if (!GameMenu_Handler.Paused)
         {
             if (darknessPath.Count > 0)
             {
                 moveDarknessAlongPath();
             }
             darknessSpeed += DarknessSpeedIncrease * Time.deltaTime;
-        }
-        if (GameOver)
-        {
-            AudioListener.volume = 1 - ((Time.time - timeSinceBlackOut) / BlackOutTime);
         }
     }
 
@@ -68,11 +75,13 @@ public class GameManager : MonoBehaviour {
 
     public void SlowDownDarkness()
     {
-        Debug.Log("DARKNESS IS SLOWED DOWN BY A LIGHT!");
-        darknessSpeed -= DarknessSpeedDecrease;
-        if (darknessSpeed < BaseDarknessSpeed)
-        {
-            darknessSpeed = BaseDarknessSpeed;
+        if (!Consuming) {
+            Debug.Log("DARKNESS IS SLOWED DOWN BY A LIGHT!");
+            darknessSpeed -= DarknessSpeedDecrease;
+            if (darknessSpeed < BaseDarknessSpeed)
+            {
+                darknessSpeed = BaseDarknessSpeed;
+            }
         }
     }
 
@@ -81,5 +90,11 @@ public class GameManager : MonoBehaviour {
         GameOver = true;
         timeSinceBlackOut = Time.time;
         //SceneManager.LoadScene("GameOverMenu");
+    }
+
+    public void QuickDarknessConsume()
+    {
+        DarknessSpeedIncrease = 5f;
+        Consuming = true;
     }
 }

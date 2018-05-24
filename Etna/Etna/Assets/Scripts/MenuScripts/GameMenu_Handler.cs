@@ -40,6 +40,10 @@ public class GameMenu_Handler : MonoBehaviour
 
         if (Time.time - gameOverScreenRequestTime >= GameManager.BlackOutTime && GameManager.GameOver)
         {
+            AudioListener.volume = 1;
+            GameManager.GameOver = false;
+            GameManager.Consuming = false;
+            Shader.SetGlobalVector("_TargetPos", new Vector3(0, 0, 0));
             SceneManager.LoadScene("GameOverMenu");
         }
     }

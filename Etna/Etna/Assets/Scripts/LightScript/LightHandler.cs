@@ -22,8 +22,19 @@ public class LightHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (null != crystalLight)
+        Debug.Log(resources);
+        if (null == gameHandler)
         {
+            gameHandler = GameObject.Find("GameHandler");
+        }
+        else if (null == resources)
+        {
+            resources = gameHandler.GetComponent<Resources>();
+        }
+        else if (null != crystalLight)
+        {
+            Debug.Log(crystalLight);
+            Debug.Log(resources);
             crystalLight.intensity = maxLightIntensity * (resources.GetAmountOfEnergy() / 100);
         }
     }

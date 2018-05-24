@@ -21,18 +21,18 @@ public class Room : MonoBehaviour {
 		
 	}
 
-    public void InitializeRoom(int gridXPos, int gridYPos, GameObject pRoom, bool[] pDoorDirections, GameObject pWall, GameObject pDoorWall, GameObject pRoof, int pEntrance = -1)
+    public void InitializeRoom(int gridXPos, int gridYPos, GameObject pRoom, bool[] pDoorDirections, int pEntrance = -1)
     {
         gridPosition = new Vector2(gridXPos, gridYPos);
         room = GameObject.Instantiate(pRoom).transform;
-        roof = GameObject.Instantiate(pRoof, room).transform;
+        //roof = GameObject.Instantiate(pRoof, room).transform;
         room.position = new Vector3((gridPosition.x - LevelGenerator.roomGridSize / 2) * 50, 0, (gridPosition.y - LevelGenerator.roomGridSize / 2) * 50);
-        roof.position = new Vector3((gridPosition.x - LevelGenerator.roomGridSize / 2) * 50, 50, (gridPosition.y - LevelGenerator.roomGridSize / 2) * 50);
-        room.transform.eulerAngles = new Vector3(0, 90 * Random.Range(0, 4), 0);
+        //roof.position = new Vector3((gridPosition.x - LevelGenerator.roomGridSize / 2) * 50, 50, (gridPosition.y - LevelGenerator.roomGridSize / 2) * 50);
+        //room.transform.eulerAngles = new Vector3(0, 90 * Random.Range(0, 4), 0);
         doorDirections = pDoorDirections;
-        roomType = int.Parse(pRoom.name.Remove(0,5));
+        roomType = int.Parse(pRoom.name.Remove(0,6));
 
-        for (int i = 0; i < doorDirections.Length; i++)
+        /*for (int i = 0; i < doorDirections.Length; i++)
         {
             if (doorDirections[i])
             {
@@ -62,27 +62,27 @@ public class Room : MonoBehaviour {
                 walls[i].position = room.position + new Vector3(-25f, 25, 0);
                 walls[i].eulerAngles = new Vector3(0, 90, 0);
             }
-        }
+        }*/
         if (pEntrance >= 0)
         {
             doorDirections[pEntrance] = false;
         }
     }
 
-    public void RepositionRoom(int gridXPos, int gridYPos, bool[] pDoorDirections, GameObject pWall, GameObject pDoorWall, int pEntrance = -1)
+    public void RepositionRoom(int gridXPos, int gridYPos, bool[] pDoorDirections, int pEntrance = -1)
     {
-        for (int i = 0; i < walls.Length; i++)
+        /*for (int i = 0; i < walls.Length; i++)
         {
             Destroy(walls[i].gameObject);
         }
-        walls = new Transform[4];
+        walls = new Transform[4];*/
 
         gridPosition = new Vector2(gridXPos, gridYPos);
         room.position = new Vector3((gridPosition.x - LevelGenerator.roomGridSize / 2) * 50, 0, (gridPosition.y - LevelGenerator.roomGridSize / 2) * 50);
-        roof.position = new Vector3((gridPosition.x - LevelGenerator.roomGridSize / 2) * 50, 50, (gridPosition.y - LevelGenerator.roomGridSize / 2) * 50);
+        //roof.position = new Vector3((gridPosition.x - LevelGenerator.roomGridSize / 2) * 50, 50, (gridPosition.y - LevelGenerator.roomGridSize / 2) * 50);
         doorDirections = pDoorDirections;
 
-        for (int i = 0; i < doorDirections.Length; i++)
+        /*for (int i = 0; i < doorDirections.Length; i++)
         {
             if (doorDirections[i])
             {
@@ -110,7 +110,7 @@ public class Room : MonoBehaviour {
                 walls[i].position = room.position + new Vector3(-24.5f, 25, 0);
                 walls[i].eulerAngles = new Vector3(0, 90, 0);
             }
-        }
+        }*/
         if (pEntrance >= 0)
         {
             doorDirections[pEntrance] = false;

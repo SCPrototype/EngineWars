@@ -8,14 +8,10 @@ public class LevelGenerator : MonoBehaviour {
     private GameObject player;
 
     private const int maxActiveRoomAmount = 6;
-    private const float spawnInterval = 5f;
-    private float lastSpawn;
 
-    public const int roomGridSize = 100;
+    public const int roomGridSize = 500;
 
     public GameObject SolidWall;
-    public GameObject DoorWall;
-    public GameObject Roof;
 
     public GameObject[] RoomDesigns;
     private List<Room> rooms = new List<Room>();
@@ -40,9 +36,8 @@ public class LevelGenerator : MonoBehaviour {
         }
         if (rooms.Count > 1)
         {
-            player.transform.position = rooms[0].GetRoomPosition() + (0.45f * (rooms[0].GetRoomPosition() - rooms[1].GetRoomPosition())) + new Vector3(0, 22.5f, 0);
-            player.transform.LookAt(rooms[1].GetRoomPosition() + new Vector3(0, 22.5f, 0));
-            //player.transform.position = rooms[0].GetRoomPosition();
+            player.transform.position = rooms[0].GetRoomPosition() + (0.45f * (rooms[0].GetRoomPosition() - rooms[1].GetRoomPosition())) + new Vector3(0, 18.5f, 3.5f);
+            //player.transform.LookAt(rooms[1].GetRoomPosition() + new Vector3(0, 25f, 3.5f));
         }
     }
 
@@ -52,11 +47,15 @@ public class LevelGenerator : MonoBehaviour {
         {
             AddNewRoom();
         }
-        /*if (Time.time - lastSpawn >= spawnInterval)
+
+        for (int i = rooms.Count-1; i >= 0; i--)
         {
-            AddNewRoom();
-            lastSpawn = Time.time;
-        }*/
+            if (Vector3.Distance(new Vector3(player.transform.position.x, rooms[i].GetRoomPosition().y, player.transform.position.z), rooms[i].GetRoomPosition()) <= 25)
+            {
+                player.GetComponent<Respawn>().SetRespawnPos(rooms[i].GetRoomPosition() + (0.45f * (rooms[i].GetRoomPosition() - rooms[i+1].GetRoomPosition())) + new Vector3(0, 18.5f, 3.5f));
+                break;
+            }
+        }
     }
 
     public void AddNewRoom()
@@ -65,15 +64,15 @@ public class LevelGenerator : MonoBehaviour {
         {
             Room lastRoom = rooms[rooms.Count - 1];
             int direction = lastRoom.GetRandomDoorDirection();
-            bool[] doors = new bool[] {false,false,false,false};
+            bool[] doors = new bool[] {false,true,false,true};
             int entranceDoor = direction - 2;
             if (entranceDoor < 0)
             {
                 entranceDoor = 4 + entranceDoor;
             }
-            doors[entranceDoor] = true;
+            //doors[entranceDoor] = true;
             Vector2 newRoomPos = new Vector2(Mathf.RoundToInt(lastRoom.GetGridPosition().x + directionToVec2(direction).x), Mathf.RoundToInt(lastRoom.GetGridPosition().y + directionToVec2(direction).y));
-            doors[getRandomDirection(doors, newRoomPos)] = true;
+            //doors[getRandomDirection(doors, newRoomPos)] = true;
 
             int roomDesign = Random.Range(0, RoomDesigns.Length);
             bool roomPlaced = false;
@@ -85,7 +84,7 @@ public class LevelGenerator : MonoBehaviour {
                     {
                         roomPool[i].ToggleRoomActive(true);
                         rooms.Add(roomPool[i]);
-                        roomPool[i].RepositionRoom(Mathf.RoundToInt(newRoomPos.x), Mathf.RoundToInt(newRoomPos.y), doors, SolidWall, DoorWall, entranceDoor);
+                        roomPool[i].RepositionRoom(Mathf.RoundToInt(newRoomPos.x), Mathf.RoundToInt(newRoomPos.y), doors, entranceDoor);
                         if (gameManager != null)
                         {
                             gameManager.AddToDarknessPath(roomPool[i].GetRoomPosition());
@@ -100,7 +99,7 @@ public class LevelGenerator : MonoBehaviour {
             if (!roomPlaced)
             {
                 Room newRoom = new Room();
-                newRoom.InitializeRoom(Mathf.RoundToInt(newRoomPos.x), Mathf.RoundToInt(newRoomPos.y), RoomDesigns[roomDesign], doors, SolidWall, DoorWall, Roof, entranceDoor);
+                newRoom.InitializeRoom(Mathf.RoundToInt(newRoomPos.x), Mathf.RoundToInt(newRoomPos.y), RoomDesigns[roomDesign], doors, entranceDoor);
                 rooms.Add(newRoom);
                 if (gameManager != null)
                 {
@@ -120,11 +119,14 @@ public class LevelGenerator : MonoBehaviour {
         else
         { 
             Room newRoom = new Room();
-            bool[] doors = new bool[] { true, false, false, false };
+            bool[] doors = new bool[] { false, true, false, false };
             //doors[Random.Range(0, doors.Length)] = true;
-            newRoom.InitializeRoom(roomGridSize/2, roomGridSize/2, RoomDesigns[Random.Range(0, RoomDesigns.Length)], doors, SolidWall, DoorWall, Roof);
+            newRoom.InitializeRoom(roomGridSize/2, roomGridSize/2, RoomDesigns[Random.Range(0, RoomDesigns.Length)], doors);
             roomGrid[roomGridSize/2, roomGridSize/2] = true;
             rooms.Add(newRoom);
+            Transform wall = GameObject.Instantiate(SolidWall).transform;
+            wall.position = newRoom.GetRoomPosition() + new Vector3(-28.5f, 21.8f, 3.36f);
+            wall.eulerAngles = new Vector3(0, 90, 0);
             if (gameManager != null)
             {
                 gameManager.AddToDarknessPath(newRoom.GetRoomPosition());
