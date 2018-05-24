@@ -7,6 +7,8 @@ public class GameMenu_Handler : MonoBehaviour
 {
     public GameObject PauseMenu;
     public GameObject blackPanel;
+    public GameObject OptionScreen;
+    public GameObject QuitMenu;
     public static bool Paused = false;
     private const float timeToGameOverScreen = 2;
     private float gameOverScreenRequestTime;
@@ -44,6 +46,8 @@ public class GameMenu_Handler : MonoBehaviour
 
     public void TogglePauseMenu(bool toggle)
     {
+        OptionScreen.SetActive(false);
+        QuitMenu.SetActive(false);
         PauseMenu.SetActive(toggle);
         Paused = toggle;
     }
@@ -51,6 +55,12 @@ public class GameMenu_Handler : MonoBehaviour
     public void FadeToBlack(bool toggle)
     {
         blackPanel.SetActive(toggle);
+    }
+
+    public void OpenOptionMenu()
+    {
+        PauseMenu.SetActive(false);
+        OptionScreen.SetActive(true);
     }
 
     public void RestartLevel()
@@ -61,6 +71,13 @@ public class GameMenu_Handler : MonoBehaviour
     public void StartRealLevel()
     {
         SceneManager.LoadScene("LevelOne");
+    }
+
+    public void QuitLevel()
+    {
+        PauseMenu.SetActive(false);
+        QuitMenu.SetActive(true);
+
     }
 
     public void BackToMain()

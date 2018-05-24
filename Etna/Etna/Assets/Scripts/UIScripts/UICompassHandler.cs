@@ -16,11 +16,17 @@ public class UICompassHandler : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         doorsInRoom = GetDoorsInRoom();
-        foreach (Transform doorpost in doorsInRoom)
+        if (null != doorsInRoom)
         {
-            Debug.Log(doorpost.name + " " + doorpost.position);
+            foreach (Transform doorpost in doorsInRoom)
+            {
+                Debug.Log(doorpost.name + " " + doorpost.position);
+            }
+            CreateIcons();
+        } else
+        {
+            Debug.Log("box not found");
         }
-        CreateIcons();
 
     }
 
@@ -30,18 +36,23 @@ public class UICompassHandler : MonoBehaviour
 
         //Get the current box you're in.
         GameObject currentBox = GameObject.Find("box");
-
-        Transform[] boxChildList = currentBox.transform.GetComponentsInChildren<Transform>();
-        //Get all wall objects in the box.
-        foreach (Transform DoorPost in boxChildList)
+        if (null != currentBox)
         {
-            if (DoorPost.tag == "HasDoor")
+            Transform[] boxChildList = currentBox.transform.GetComponentsInChildren<Transform>();
+            //Get all wall objects in the box.
+            foreach (Transform DoorPost in boxChildList)
             {
-                doorList.Add(DoorPost);
+                if (DoorPost.tag == "HasDoor")
+                {
+                    doorList.Add(DoorPost);
+                }
             }
-        }
 
-        return doorList;
+            return doorList;
+        } else
+        {
+            return null;
+        }
     }
 
     private void CreateIcons()
@@ -72,8 +83,8 @@ public class UICompassHandler : MonoBehaviour
             Debug.DrawRay(player.transform.position, northVector, Color.blue, 20);
             float angle = Vector3.Angle(northVector, PlayerToDoor);
             Debug.Log(angle);
-           // Debug.Log("Angle is: " + angle);
-            float widthOfBar = (580) /2;
+            // Debug.Log("Angle is: " + angle);
+            float widthOfBar = (580) / 2;
             ////Get the angle of position between player and the door.
             //var angle = Vector3.Angle(player.transform.localEulerAngles, doorsInRoom[count].position);
             ////float combinedAngle = positionToObject.x * positionToObject.z;
