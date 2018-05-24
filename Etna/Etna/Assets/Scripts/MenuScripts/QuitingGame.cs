@@ -12,6 +12,6 @@ public class QuitingGame : MonoBehaviour
 
     public void QuitGame()
     {
-        SceneManager.LoadScene("Startscreen");
+        SceneManager.LoadScene("AllMenuScenes");
     }
 }

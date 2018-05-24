@@ -9,9 +9,13 @@ public class GameMenu_Handler : MonoBehaviour
     public GameObject blackPanel;
     public GameObject OptionScreen;
     public GameObject QuitMenu;
+    public GameObject HUD;
     public static bool Paused = false;
     private const float timeToGameOverScreen = 2;
     private float gameOverScreenRequestTime;
+    public AudioClip ClickAudio;
+    public AudioClip SliderAudio;
+    public AudioSource AudioSourceEffects;
 
     // Use this for initialization
     void Start()
@@ -50,6 +54,7 @@ public class GameMenu_Handler : MonoBehaviour
 
     public void TogglePauseMenu(bool toggle)
     {
+        HUD.SetActive(!toggle);
         OptionScreen.SetActive(false);
         QuitMenu.SetActive(false);
         PauseMenu.SetActive(toggle);
@@ -67,14 +72,16 @@ public class GameMenu_Handler : MonoBehaviour
         OptionScreen.SetActive(true);
     }
 
+    public void BackToPause()
+    {
+        OptionScreen.SetActive(false);
+        PauseMenu.SetActive(true);
+        Paused = true;
+    }
+
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void StartRealLevel()
-    {
-        SceneManager.LoadScene("LevelOne");
     }
 
     public void QuitLevel()
@@ -84,8 +91,22 @@ public class GameMenu_Handler : MonoBehaviour
 
     }
 
-    public void BackToMain()
+    public void OnClickAudio()
     {
-        SceneManager.LoadScene("MainMenu");
+        if (AudioSourceEffects.clip != ClickAudio)
+        {
+            AudioSourceEffects.clip = ClickAudio;
+        }
+        AudioSourceEffects.Play();
+    }
+
+    public void OnSlideAudio()
+    {
+        if (AudioSourceEffects.clip != SliderAudio)
+        {
+            AudioSourceEffects.clip = SliderAudio;
+        }
+        if (AudioSourceEffects.isPlaying != true)
+        { AudioSourceEffects.Play(); }
     }
 }
