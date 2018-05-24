@@ -10,7 +10,7 @@ public class Options : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("Startscreen");
+            //SceneManager.LoadScene("Startscreen");
         }
     }
 

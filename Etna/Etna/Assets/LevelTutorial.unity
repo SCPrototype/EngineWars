@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45082235, g: 0.5007405, b: 0.57469404, a: 1}
+  m_IndirectSpecularColor: {r: 0.45082295, g: 0.5007415, b: 0.5746953, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -402,11 +402,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114918125564102170, guid: 55385a3f5a5bc7249ae514c8a13fee29,
-        type: 2}
-      propertyPath: InteractText
-      value: 
-      objectReference: {fileID: 1992326247}
     - target: {fileID: 114756492954716324, guid: 55385a3f5a5bc7249ae514c8a13fee29,
         type: 2}
       propertyPath: DoorIcon
@@ -417,6 +412,11 @@ Prefab:
       propertyPath: CompassPanel
       value: 
       objectReference: {fileID: 1596701866}
+    - target: {fileID: 114918125564102170, guid: 55385a3f5a5bc7249ae514c8a13fee29,
+        type: 2}
+      propertyPath: InteractText
+      value: 
+      objectReference: {fileID: 1321607134}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 55385a3f5a5bc7249ae514c8a13fee29, type: 2}
   m_IsPrefabParent: 0
@@ -1158,6 +1158,106 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 388332291}
+--- !u!1001 &460731887
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224499769701817950, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 51e1e22ab5b77774ba552cbac09ea1d4, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &525127895
 GameObject:
   m_ObjectHideFlags: 0
@@ -2562,7 +2662,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1037055378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3535,6 +3635,12 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1302361965}
+--- !u!114 &1321607134 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114376728846739680, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+    type: 2}
+  m_PrefabInternal: {fileID: 460731887}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1328373429
 GameObject:
   m_ObjectHideFlags: 0
@@ -5831,7 +5937,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1916945761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5844,9 +5950,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseMenu: {fileID: 1712690330}
-  blackPanel: {fileID: 1637937801}
   OptionScreen: {fileID: 0}
   QuitMenu: {fileID: 0}
+  HUD: {fileID: 0}
+  blackPanel: {fileID: 1637937801}
+  ClickAudio: {fileID: 0}
+  SliderAudio: {fileID: 0}
+  AudioSourceEffects: {fileID: 0}
 --- !u!4 &1916945762
 Transform:
   m_ObjectHideFlags: 0

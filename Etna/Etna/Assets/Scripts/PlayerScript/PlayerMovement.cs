@@ -364,11 +364,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleInteractible()
     {
+        
         bool text1 = false;
         bool text2 = false;
         bool text3 = false;
         if (checkInteractable(KeyCode.E) == true)
-        { InteractText.text = "Press E to interact."; text1 = true; }
+        { InteractText.text = "Press E to interact."; text1 = true; Debug.Log("Press E"); }
         if (checkInteractable(KeyCode.Space) == true)
         { InteractText.text = "Press Space to interact."; text2 = true; }
         if (checkInteractable(KeyCode.LeftShift) == true)
