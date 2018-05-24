@@ -44,7 +44,7 @@ public class GameMenu_Handler : MonoBehaviour
             GameManager.GameOver = false;
             GameManager.Consuming = false;
             Shader.SetGlobalVector("_TargetPos", new Vector3(0, 0, 0));
-            SceneManager.LoadScene("GameOverMenu");
+            SceneManager.LoadScene("GameOver");
         }
     }
 
