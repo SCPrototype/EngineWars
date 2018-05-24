@@ -36,8 +36,8 @@ public class DarknessEffects : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         //Manage the global shader.
-        Shader.SetGlobalVector("_TargetPos", target.transform.position + new Vector3(40, 0, 0));
         if (target != null) {
+            Shader.SetGlobalVector("_TargetPos", target.transform.position + new Vector3(40, 0, 0));
             if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.transform.position.x, target.transform.position.z)) <= minVignetteDistance)
             {
                 myController.vignette.intensity = minVignetteValue;
@@ -71,6 +71,9 @@ public class DarknessEffects : MonoBehaviour {
             {
                 shouldWarn = true;
             }
+        } else
+        {
+            Shader.SetGlobalVector("_TargetPos", new Vector3(-1000, 0, 0));
         }
         if (GameManager.GameOver && !transistionHasPlayed)
         {
