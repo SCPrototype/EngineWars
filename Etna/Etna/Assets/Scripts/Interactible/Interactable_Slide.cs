@@ -23,7 +23,6 @@ public class Interactable_Slide : Interactable {
 
     public override void Interact(PlayerMovement target)
     {
-        Debug.Log(GetAngleDifference(new Vector2(target.GetRigidBody().velocity.x, target.GetRigidBody().velocity.z), SlideAngle));
         Collider[] allOverlappingColliders = Physics.OverlapBox(SlideStart.bounds.center, SlideStart.bounds.extents, SlideStart.transform.rotation);
 
         foreach (Collider collidedObject in allOverlappingColliders)

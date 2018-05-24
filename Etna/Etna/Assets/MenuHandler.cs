@@ -77,7 +77,7 @@ public class MenuHandler : MonoBehaviour
                 SceneManager.LoadScene("LevelTutorial", LoadSceneMode.Single);
                 break;
             case Levels.ChapterOne:
-                SceneManager.LoadScene("All Levels", LoadSceneMode.Single);
+                SceneManager.LoadScene("Game", LoadSceneMode.Single);
                 break;
         }
     }

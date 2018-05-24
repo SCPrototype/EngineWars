@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1228,6 +1228,15 @@ Prefab:
       propertyPath: TutorialTextImage
       value: 
       objectReference: {fileID: 13711693}
+    - target: {fileID: 82103526648503340, guid: 2eb179787fb548d45850b10fe2a7b32f,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1573975882502810, guid: 2eb179787fb548d45850b10fe2a7b32f, type: 2}
+      propertyPath: m_TagString
+      value: UIManager
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2eb179787fb548d45850b10fe2a7b32f, type: 2}
   m_IsPrefabParent: 0
@@ -2627,7 +2636,7 @@ GameObject:
   - component: {fileID: 481887263}
   m_Layer: 0
   m_Name: MenuHandler
-  m_TagString: Untagged
+  m_TagString: UIManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2735,7 +2744,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -2847,7 +2856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &515357071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7678,6 +7687,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1389461305}
+--- !u!114 &1389586276 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114043402414480986, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+    type: 2}
+  m_PrefabInternal: {fileID: 1421509505}
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &1421509505
 Prefab:
   m_ObjectHideFlags: 0
@@ -7840,6 +7855,29 @@ Prefab:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 481887260}
+    - target: {fileID: 1858494426009922, guid: 51e1e22ab5b77774ba552cbac09ea1d4, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114043402414480986, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82520516685876854, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114698502114903176, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+        type: 2}
+      propertyPath: blackPanel
+      value: 
+      objectReference: {fileID: 1389586276}
+    - target: {fileID: 1055589810742190, guid: 51e1e22ab5b77774ba552cbac09ea1d4, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 51e1e22ab5b77774ba552cbac09ea1d4, type: 2}
   m_IsPrefabParent: 0
