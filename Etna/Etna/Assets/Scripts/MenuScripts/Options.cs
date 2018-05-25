@@ -10,6 +10,8 @@ public class Options : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            MenuHandler mh = GameObject.FindGameObjectWithTag("UIManager").GetComponent<MenuHandler>();
+            mh.ActivateStartScreen();
             //SceneManager.LoadScene("Startscreen");
         }
     }

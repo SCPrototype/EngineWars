@@ -15,7 +15,7 @@ public class LevelGenerator : MonoBehaviour {
 
     public GameObject[] RoomDesigns;
     private List<Room> rooms = new List<Room>();
-    private List<Room> roomPool = new List<Room>();
+    //private List<Room> roomPool = new List<Room>();
     private bool[,] roomGrid = new bool[roomGridSize, roomGridSize];
 
     // Use this for initialization
@@ -76,7 +76,7 @@ public class LevelGenerator : MonoBehaviour {
 
             int roomDesign = Random.Range(0, RoomDesigns.Length);
             bool roomPlaced = false;
-            if (roomPool.Count > 0)
+            /*if (roomPool.Count > 0)
             {
                 for (int i = 0; i < roomPool.Count-1; i++)
                 {
@@ -94,7 +94,7 @@ public class LevelGenerator : MonoBehaviour {
                         break;
                     }
                 }
-            }
+            }*/
 
             if (!roomPlaced)
             {
@@ -110,7 +110,7 @@ public class LevelGenerator : MonoBehaviour {
 
             if (rooms.Count > maxActiveRoomAmount)
             {
-                roomPool.Add(rooms[0]);
+                //roomPool.Add(rooms[0]);
                 rooms[0].ToggleRoomActive(false);
                 roomGrid[Mathf.RoundToInt(rooms[0].GetGridPosition().x), Mathf.RoundToInt(rooms[0].GetGridPosition().y)] = false;
                 rooms.RemoveAt(0);

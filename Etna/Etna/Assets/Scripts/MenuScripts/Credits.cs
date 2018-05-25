@@ -9,7 +9,9 @@ public class Credits : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("Startscreen");
+            MenuHandler mh = GameObject.FindGameObjectWithTag("UIManager").GetComponent<MenuHandler>();
+            mh.ActivateStartScreen();
+            //SceneManager.LoadScene("Startscreen");
         }
     }
 

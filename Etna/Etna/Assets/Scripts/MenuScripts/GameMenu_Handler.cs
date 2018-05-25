@@ -81,6 +81,7 @@ public class GameMenu_Handler : MonoBehaviour
         HUD.SetActive(!toggle);
         PauseMenu.SetActive(toggle);
         Paused = toggle;
+        Cursor.visible = toggle;
     }
 
     public void FadeToBlack(bool toggle, float time)

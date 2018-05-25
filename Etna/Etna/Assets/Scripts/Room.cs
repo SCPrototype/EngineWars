@@ -146,6 +146,9 @@ public class Room : MonoBehaviour {
 
     public void ToggleRoomActive(bool toggle)
     {
-        room.gameObject.SetActive(toggle);
+        if (!toggle) {
+            Destroy(room.gameObject);
+        }
+        //room.gameObject.SetActive(toggle);
     }
 }
