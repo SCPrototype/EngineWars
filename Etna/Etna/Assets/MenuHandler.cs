@@ -30,10 +30,10 @@ public class MenuHandler : MonoBehaviour
     {
         currentSelectedLevel = Levels.Tutorial;
         Cursor.visible = true;
-        if (Screen.currentResolution.width != 1920 || Screen.currentResolution.height != 1080)
+        /*if (Screen.currentResolution.width != 1920 || Screen.currentResolution.height != 1080)
         {
             Screen.SetResolution(1920, 1080, Screen.fullScreen);
-        }
+        }*/
     }
 
     // Update is called once per frame

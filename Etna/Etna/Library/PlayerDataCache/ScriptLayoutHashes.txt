@@ -102,6 +102,7 @@ ff05dcdf90651c3d98a9cad3df5e471e UnityEngine.Timeline.dll:UnityEngine.Timeline.C
 31aaf521b3ef8699466676591ea0efd4 UnityEngine.Timeline.dll:UnityEngine.Timeline.GroupTrack
 31aaf521b3ef8699466676591ea0efd4 UnityEngine.Timeline.dll:UnityEngine.Timeline.PlayableTrack
 df374c01140c2d578bf70cbd60073d1d UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
+54672264b89833004786a8e6f332bfe0 Assembly-CSharp.dll:.RotationManager
 c10f9c1d9573bf9f92c10fa40b716ff5 Assembly-CSharp.dll:.GameManager
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
@@ -187,4 +188,3 @@ ca6e2f44254d4ea9a2f8bce87bd42075 Assembly-CSharp.dll:UnityEngine.PostProcessing.
 683b7642dd927c1de7e35462050583a6 Assembly-CSharp.dll:.VoiceLinePlayer
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.GameOverScreen
 b8288995dbb64d381bce11f145fa744c Assembly-CSharp.dll:.LevelGenerator
-54672264b89833004786a8e6f332bfe0 Assembly-CSharp.dll:.RotationManager
