@@ -2337,6 +2337,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1621176932444086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4694176769338432}
+  - component: {fileID: 65909147320341834}
+  - component: {fileID: 114945976505972168}
+  m_Layer: 0
+  m_Name: PlayerFallingCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1621830585231232
 GameObject:
   m_ObjectHideFlags: 1
@@ -4335,6 +4352,7 @@ Transform:
   - {fileID: 4695311006074060}
   - {fileID: 4869147730964074}
   - {fileID: 4962047333134314}
+  - {fileID: 4694176769338432}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5813,6 +5831,19 @@ Transform:
   m_Father: {fileID: 4730536848339816}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 4.045, y: 80.73801, z: 0}
+--- !u!4 &4694176769338432
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1621176932444086}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
+  m_LocalScale: {x: 45, y: 10, z: 45}
+  m_Children: []
+  m_Father: {fileID: 4213644291041020}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4695207921786406
 Transform:
   m_ObjectHideFlags: 1
@@ -13631,6 +13662,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.021258345, y: 0.01742221, z: 0.020575313}
   m_Center: {x: -0.000261094, y: 0.0028332532, z: 0.000031355736}
+--- !u!65 &65909147320341834
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1621176932444086}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &82165551982153876
 AudioSource:
   m_ObjectHideFlags: 1
@@ -15014,6 +15057,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactKey: 101
   activationLight: {fileID: 114023703293653678}
+--- !u!114 &114945976505972168
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1621176932444086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a19c5c3308fa21c4dafc995bd4aa51c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactKey: 114
 --- !u!136 &136254621613749384
 CapsuleCollider:
   m_ObjectHideFlags: 1

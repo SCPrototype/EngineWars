@@ -5234,6 +5234,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1916016410092338
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4655493023712384}
+  - component: {fileID: 65889049769316880}
+  - component: {fileID: 114357484959865288}
+  m_Layer: 0
+  m_Name: PlayerFallingCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1921527646983964
 GameObject:
   m_ObjectHideFlags: 1
@@ -6805,6 +6822,7 @@ Transform:
   - {fileID: 4258527735465308}
   - {fileID: 4074796908878188}
   - {fileID: 4535453302732988}
+  - {fileID: 4655493023712384}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8757,6 +8775,19 @@ Transform:
   m_Father: {fileID: 4337154942808476}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -10.315001, y: -5.9480004, z: 15.816001}
+--- !u!4 &4655493023712384
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1916016410092338}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
+  m_LocalScale: {x: 45, y: 10, z: 45}
+  m_Children: []
+  m_Father: {fileID: 4229799239372136}
+  m_RootOrder: 49
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4658870244119896
 Transform:
   m_ObjectHideFlags: 1
@@ -20625,6 +20656,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 600, y: 185.0002, z: 1}
   m_Center: {x: 0, y: 0, z: 499.5}
+--- !u!65 &65889049769316880
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1916016410092338}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65989615144190318
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -23323,6 +23366,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactKey: 101
   activationLight: {fileID: 114451764952728188}
+--- !u!114 &114357484959865288
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1916016410092338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a19c5c3308fa21c4dafc995bd4aa51c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactKey: 114
 --- !u!114 &114435839697736016
 MonoBehaviour:
   m_ObjectHideFlags: 1

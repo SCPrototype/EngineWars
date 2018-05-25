@@ -24,7 +24,7 @@ public class CompassMovement : MonoBehaviour
     {
         float widthOfBar = (Screen.width - compassBar.rect.width * bar.transform.localScale.x) / 2;
       
-        float centerX = Mathf.Lerp(widthOfBar, Screen.width - widthOfBar, (float)(player.transform.eulerAngles.y / 360 + 0.5) % 1);
+        float centerX = Mathf.Lerp(widthOfBar, Screen.width - widthOfBar, (float)((player.transform.eulerAngles.y  -90) / 360 + 0.5) % 1);
        // Debug.Log(centerX + " " + player.transform.eulerAngles.y);
         this.transform.position = new Vector3(centerX, bar.transform.position.y, 0);
     }
