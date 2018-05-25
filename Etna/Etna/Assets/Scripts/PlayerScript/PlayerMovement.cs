@@ -364,10 +364,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleInteractible()
     {
-        
+
         bool text1 = false;
         bool text2 = false;
         bool text3 = false;
+        bool text4 = false;
         if (checkInteractable(KeyCode.E) == true)
         { InteractText.text = "Press E to interact."; text1 = true; Debug.Log("Press E"); }
         if (checkInteractable(KeyCode.Space) == true)
@@ -375,7 +376,14 @@ public class PlayerMovement : MonoBehaviour
         if (checkInteractable(KeyCode.LeftShift) == true)
         { InteractText.text = "Press Shift to interact."; text3 = true; }
         if (text1 == false && text2 == false && text3 == false)
+            if (checkInteractable(KeyCode.R) == true)
+            {
+                InteractText.text = "Press R to respawn.";
+                text4 = true;
+            }
+        if (text1 == false && text2 == false && text3 == false && text4 == false)
         { InteractText.text = ""; }
+
     }
 
     private void SwitchState(MovementState state)

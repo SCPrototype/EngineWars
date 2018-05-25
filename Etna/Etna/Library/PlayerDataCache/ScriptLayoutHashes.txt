@@ -1,23 +1,10 @@
 WindowsStandalone
 SceneListBegin?
+Assets/Scenes/MenuScene/SplashScreen.unity
 Assets/Scenes/AllMenuScenes.unity
 Assets/LevelTutorial.unity
 Assets/Scenes/Game.unity
-Assets/Scenes/GameOverMenu.unity
-Assets/Scenes/MenuScene/Credits.unity
 Assets/Scenes/MenuScene/GameOver.unity
-Assets/Scenes/MenuScene/LoadGame.unity
-Assets/All Levels.unity
-Assets/Scenes/MenuScene/Name.unity
-Assets/Scenes/MenuScene/Options.unity
-Assets/Scenes/MenuScene/Pause.unity
-Assets/Scenes/MenuScene/ProgressionScreen.unity
-Assets/Scenes/MenuScene/Quit.unity
-Assets/Scenes/MenuScene/QuitingForGame.unity
-Assets/Scenes/MenuScene/QuitingForSure.unity
-Assets/Scenes/MenuScene/QuitMenu.unity
-Assets/Scenes/MenuScene/SplashScreen.unity
-Assets/Scenes/MenuScene/Startscreen.unity
 SceneListEnd?
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.LoadGame
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
@@ -101,6 +88,7 @@ f61c0793411f10cf5fbfa1473fef5ef2 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 86d36c43c53541d667100dc90b89cfba UnityEngine.UI.dll:UnityEngine.EventSystems.TouchInputModule
 1b8c02d0aa82fbf036a2b9b2d713eec3 UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
 3ecea0c2e43f5d97a17c441bfcf59a7d Assembly-CSharp.dll:UnityEngine.PostProcessing.PostProcessingBehaviour
+d0237b70b3dc5cd1c2bd80eef6bacca8 Assembly-CSharp.dll:.LightvDarkness
 93e54f06b8ae99bd799472c67be56cac Assembly-CSharp.dll:.Interactable
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 dbc29a6f2739d277c10da432d73adb6d UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
@@ -114,7 +102,6 @@ ff05dcdf90651c3d98a9cad3df5e471e UnityEngine.Timeline.dll:UnityEngine.Timeline.C
 31aaf521b3ef8699466676591ea0efd4 UnityEngine.Timeline.dll:UnityEngine.Timeline.GroupTrack
 31aaf521b3ef8699466676591ea0efd4 UnityEngine.Timeline.dll:UnityEngine.Timeline.PlayableTrack
 df374c01140c2d578bf70cbd60073d1d UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
-54672264b89833004786a8e6f332bfe0 Assembly-CSharp.dll:.RotationManager
 c10f9c1d9573bf9f92c10fa40b716ff5 Assembly-CSharp.dll:.GameManager
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
@@ -174,7 +161,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 73843688b51256aed059f049c540bca8 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformChild
 528ea1fd7c01796fc60c4e2f172ea229 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
 fa05d0d66bba308ed8187a8605e9b196 Assembly-CSharp.dll:.RotatingCircle
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.DarknessEffects
+a55be57696f1ecf6678cb0a65ac01cb2 Assembly-CSharp.dll:.DarknessEffects
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Darkness
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ProgressionScreen
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.PlayModeRunnerCallback
@@ -195,8 +182,9 @@ f671a42aea5f34fec6a4450a3668c615 Assembly-CSharp.dll:UnityEngine.PostProcessing.
 680ced913d4c0f71a84e1b8fffbe3d52 Assembly-CSharp.dll:.UICompassHandler
 ca6e2f44254d4ea9a2f8bce87bd42075 Assembly-CSharp.dll:UnityEngine.PostProcessing.Utilities.FocusPuller
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Room
-c7c9536a4e164123894f0e129fe7720d Assembly-CSharp.dll:.GameMenu_Handler
+7ec42b08f93fbe4936899e8849e4c1c2 Assembly-CSharp.dll:.GameMenu_Handler
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Credits
 683b7642dd927c1de7e35462050583a6 Assembly-CSharp.dll:.VoiceLinePlayer
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.GameOverScreen
 b8288995dbb64d381bce11f145fa744c Assembly-CSharp.dll:.LevelGenerator
+54672264b89833004786a8e6f332bfe0 Assembly-CSharp.dll:.RotationManager
