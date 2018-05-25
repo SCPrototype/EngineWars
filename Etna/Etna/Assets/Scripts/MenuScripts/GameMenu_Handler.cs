@@ -70,8 +70,8 @@ public class GameMenu_Handler : MonoBehaviour
 
     public void TogglePauseMenu(bool toggle)
     {
-        //OptionScreen.SetActive(false);
-        //QuitMenu.SetActive(false);
+        OptionScreen.SetActive(false);
+        QuitMenu.SetActive(false);
         PauseMenu.SetActive(toggle);
         Paused = toggle;
     }
