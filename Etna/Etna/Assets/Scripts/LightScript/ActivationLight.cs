@@ -27,7 +27,7 @@ public class ActivationLight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_isActivated)
+        /*if (_isActivated)
         {
             timeLeft -= Time.deltaTime;
 
@@ -36,7 +36,7 @@ public class ActivationLight : MonoBehaviour
             {
                 TurnOffLight();
             }
-        }
+        }*/
     }
 
     public void ActivateLight()
