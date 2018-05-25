@@ -7,15 +7,21 @@ using UnityEngine.UI;
 public class GameMenu_Handler : MonoBehaviour
 {
     public GameObject PauseMenu;
+    public GameObject OptionScreen;
+    public GameObject QuitMenu;
+    public GameObject HUD;
     public Image blackPanel;
     private bool shouldFadeOut = true;
     private float fadeSpeed = 1f;
     public static bool isFading;
-    public GameObject OptionScreen;
-    public GameObject QuitMenu;
     public static bool Paused = false;
     private const float timeToGameOverScreen = 2;
     private float gameOverScreenRequestTime;
+
+    public AudioClip ClickAudio;
+    public AudioClip SliderAudio;
+    public AudioSource AudioSourceEffects;
+
 
     // Use this for initialization
     void Start()
@@ -70,8 +76,8 @@ public class GameMenu_Handler : MonoBehaviour
 
     public void TogglePauseMenu(bool toggle)
     {
-        OptionScreen.SetActive(false);
         QuitMenu.SetActive(false);
+        HUD.SetActive(!toggle);
         PauseMenu.SetActive(toggle);
         Paused = toggle;
     }
@@ -115,6 +121,32 @@ public class GameMenu_Handler : MonoBehaviour
 
     public void BackToMain()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("AllMenuScenes");
+    }
+
+    public void BackToPause()
+    {
+        OptionScreen.SetActive(false);
+        PauseMenu.SetActive(true);
+        Paused = true;
+    }
+
+    public void OnClickAudio()
+    {
+        if (AudioSourceEffects.clip != ClickAudio)
+        {
+            AudioSourceEffects.clip = ClickAudio;
+        }
+        AudioSourceEffects.Play();
+    }
+
+    public void OnSlideAudio()
+    {
+        if (AudioSourceEffects.clip != SliderAudio)
+        {
+            AudioSourceEffects.clip = SliderAudio;
+        }
+        if (AudioSourceEffects.isPlaying != true)
+        { AudioSourceEffects.Play(); }
     }
 }

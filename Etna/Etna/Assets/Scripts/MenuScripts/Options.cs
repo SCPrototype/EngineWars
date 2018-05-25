@@ -8,12 +8,9 @@ public class Options : MonoBehaviour
     
     private void Update()
     {
-        if (SceneManager.GetActiveScene().name == "AllMenuScenes")
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                SceneManager.LoadScene("Startscreen");
-            }
+            //SceneManager.LoadScene("Startscreen");
         }
     }
 
