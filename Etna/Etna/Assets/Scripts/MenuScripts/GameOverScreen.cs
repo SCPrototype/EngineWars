@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour {
 
+    void Start()
+    {
+        Cursor.visible = true;
+    }
+
     public void TryAgain()
     {
         SceneManager.LoadScene("Game");

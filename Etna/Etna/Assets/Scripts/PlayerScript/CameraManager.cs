@@ -43,6 +43,7 @@ public class CameraManager : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        Cursor.visible = false;
         cameraStartPosition = myCamera.transform.localPosition;
         cameraStartRotation = myCamera.transform.localRotation;
         startRotation = transform.localRotation;
