@@ -16,6 +16,6 @@ public class SplashScreen : MonoBehaviour
     public void GoToMainMenu()
     {
         //print("Go to Startscreen");
-        SceneManager.LoadScene("Startscreen");
+        SceneManager.LoadScene("AllMenuScenes");
     }
 }

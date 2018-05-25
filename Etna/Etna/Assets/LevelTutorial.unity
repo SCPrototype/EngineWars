@@ -312,7 +312,7 @@ Prefab:
         type: 2}
       propertyPath: InteractText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1123309651}
     - target: {fileID: 114756492954716324, guid: 55385a3f5a5bc7249ae514c8a13fee29,
         type: 2}
       propertyPath: DoorIcon
@@ -2697,6 +2697,12 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1123185501}
   m_Mesh: {fileID: 4300000, guid: 18047e7af7b94954eaeba50fb2715d9f, type: 3}
+--- !u!114 &1123309651 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114376728846739680, guid: 51e1e22ab5b77774ba552cbac09ea1d4,
+    type: 2}
+  m_PrefabInternal: {fileID: 450596716}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1123358026
 GameObject:
   m_ObjectHideFlags: 0

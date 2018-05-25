@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+# Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etna", "Etna.csproj", "{ED65B04D-71D8-6B38-E13D-E65A7ED5DBF2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etna.Editor", "Etna.Editor.csproj", "{5D067560-2AE0-233E-F35E-11942D04B340}"

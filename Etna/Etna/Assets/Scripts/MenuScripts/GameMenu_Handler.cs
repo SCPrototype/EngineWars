@@ -76,6 +76,7 @@ public class GameMenu_Handler : MonoBehaviour
 
     public void TogglePauseMenu(bool toggle)
     {
+        OptionScreen.SetActive(false);
         QuitMenu.SetActive(false);
         HUD.SetActive(!toggle);
         PauseMenu.SetActive(toggle);
