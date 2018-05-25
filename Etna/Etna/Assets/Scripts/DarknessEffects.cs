@@ -20,6 +20,10 @@ public class DarknessEffects : MonoBehaviour {
     private const int warningDelay = 30;
     private float prevWarning;
 
+    public AudioSource music;
+    private const float minMusicVolume = 0.1f;
+    private const float maxMusicVolume = 0.7f;
+
     private bool transistionHasPlayed = false;
     private AudioSource myAudioSource;
     private PostProcessingController myController;
@@ -41,13 +45,16 @@ public class DarknessEffects : MonoBehaviour {
             if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.transform.position.x, target.transform.position.z)) <= minVignetteDistance)
             {
                 myController.vignette.intensity = minVignetteValue;
+                music.volume = minMusicVolume;
             }
             else if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.transform.position.x, target.transform.position.z)) >= maxVignetteDistance)
             {
                 myController.vignette.intensity = maxVignetteValue;
+                music.volume = maxMusicVolume;
             } else
             {
                 myController.vignette.intensity = minVignetteValue - ((minVignetteValue - maxVignetteValue) * ((Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.transform.position.x, target.transform.position.z)) - minVignetteDistance) / (maxVignetteDistance - minVignetteDistance)));
+                music.volume = minMusicVolume + ((maxMusicVolume - minMusicVolume) * ((Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.transform.position.x, target.transform.position.z)) - minVignetteDistance) / (maxVignetteDistance - minVignetteDistance)));
             }
 
             if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.transform.position.x, target.transform.position.z)) <= maxCameraShakeDistance)

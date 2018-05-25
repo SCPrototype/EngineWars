@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Interactable_Light : Interactable
 {
+    private AudioSource myAudioSource;
     public ActivationLight activationLight;
+
     // Use this for initialization
     void Start()
     {
+        myAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -20,6 +24,9 @@ public class Interactable_Light : Interactable
     {
         Debug.Log("Static crystal clicked");
         activationLight.ActivateLight();
-        
+        if (activationLight.GetIsActivated())
+        {
+            myAudioSource.Play();
+        }
     }
 }
